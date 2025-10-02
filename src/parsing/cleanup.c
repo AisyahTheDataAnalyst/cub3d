@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/02 17:59:40 by aimokhta         ###   ########.fr       */
+/*   Created: 2025/10/02 19:43:03 by aimokhta          #+#    #+#             */
+/*   Updated: 2025/10/02 19:44:13 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "parsing.h"
 
-int main(int ac, char **av)
+void	parsing_cleanup(parse)
 {
-	t_parse parse;
 	
-	if (ac != 2)
-		return (ft_putstr_fd("Usage: ./program maps/map\n", 2), 1);
-	if (parsing(av, &parse) == 1)
-		return (1);
-	raycasting();
-	return (0);
 }

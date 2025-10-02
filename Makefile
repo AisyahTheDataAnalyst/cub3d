@@ -19,7 +19,7 @@ PINK 	=	\033[35m
 RESET	=	\033[0m
 
 # Program name
-NAME = cub3d
+NAME = cub3D
 
 # Directories
 SRC_DIR = src
@@ -87,7 +87,7 @@ clean:
 
 fclean: clean
 	@echo "$(RED)❌ Deleting libraries$(RESET)"
-	@make -C $(LIBFT_DIR) fclean
+	@make fclean -C $(LIBFT_DIR) 
 	@echo "$(RED)❌ Deleting$(RESET)\t$(NAME)"
 	@$(RM) $(NAME)
 	@echo "$(GREEN)✅ Removed\t$(RESET)$(WHITE)$(NAME)$(RESET)"
@@ -101,7 +101,17 @@ re: fclean all
 
 FORCE:
 
-.PHONY: bonus all clean fclean re
+norm : 
+	@echo "${BLUE}----------NORMINETTE TIME!----------\n${RESET}"	
+	@echo "${GREEN}----------src----------${RESET}"
+	@norminette src
+	@echo "${GREEN}\n----------include----------${RESET}"
+	@norminette include
+	@echo "${GREEN}\n----------libft----------${RESET}"
+	@norminette libft
+	@echo "${GREEN}\n       ALL CLEAR!✅✅✅\n${RESET}"
+
+.PHONY: bonus all clean fclean re norm
 
 # -I(include directory) - Tells the compiler to look for header files
 # -L(directory) - Tells the compiler to look for .a library path in this folder
