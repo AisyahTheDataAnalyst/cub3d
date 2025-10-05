@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:33:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 17:56:55 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:09:08 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ char *line, char *curr_line, int i)
 		{
 			while (skip_whitespace(line[i]))
 				i++;
-			if (is_an_element(line[i]) && !last_char_of_line(line[i + 1]))
+			if (is_char_of_map(line[i]) && !last_char_of_line(line[i + 1]))
 				if (parse->width_start > i)
 					parse->width_start = i;
-			else if (is_an_element(line[i]) && last_char_of_line(line[i + 1]))
+			else if (is_char_of_map(line[i]) && last_char_of_line(line[i + 1]))
 				if (parse->width_end < i)
 					parse->width_end = i;
 			i++;

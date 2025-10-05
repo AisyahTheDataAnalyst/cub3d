@@ -6,23 +6,26 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 20:29:13 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 20:45:33 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	parse_colour(char *str, t_parse *parse, int mode)
+void	parse_colour(char *str, t_parse *parse)
 {
 	int		i;
 	char	*raw_colour;
 	int		*rgb;
+	int		mode;
 
 	i = 0;
 	while (str[i])
 		if (str[i] != 'F' || str[i] != 'C')
 			i++;
-	i++;
+	mode = FLOOR;
+	if (str[i] == 'C')
+		mode == CEILING;
 	while (!isdigit(str[i]))
 		i++;
 	raw_colour = &str[i];

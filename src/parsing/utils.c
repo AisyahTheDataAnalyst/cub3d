@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:43:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 20:27:40 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:09:08 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	parsing_err_msg(t_parse *parse, char *msg)
 		parse->err_msg = msg;
 }
 
-bool	is_an_element(char c)
+bool	is_char_of_map(char c)
 {
 	return (c == '1' || c == '0'
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');

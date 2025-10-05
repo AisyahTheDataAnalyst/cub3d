@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:18:51 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 20:28:52 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 20:53:26 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	parse_north_texture(char *str, t_parse *parse)
 		i++;
 	to_be_erased = &str[i];
 	parse->no_txt = ft_substr(raw_texture, 0, to_be_erased - raw_texture);
-	free(str);
 	fd = open(parse->no_txt, O_RDONLY);
 	if (fd == -1)
 		return (parse_err_msg(INVALID_NO));
@@ -60,7 +59,6 @@ void	parse_south_texture(char *str, t_parse *parse)
 		i++;
 	to_be_erased = &str[i];
 	parse->so_txt = ft_substr(raw_texture, 0, to_be_erased - raw_texture);
-	free(str);
 	fd = open(parse->so_txt, O_RDONLY);
 	if (fd == -1)
 		return (parse_err_msg(INVALID_SO));
@@ -88,7 +86,6 @@ void	parse_west_texture(char *str, t_parse *parse)
 		i++;
 	to_be_erased = &str[i];
 	parse->we_txt = ft_substr(raw_texture, 0, to_be_erased - raw_texture);
-	free(str);
 	fd = open(parse->we_txt, O_RDONLY);
 	if (fd == -1)
 		return (parse_err_msg(INVALID_WE));
@@ -116,7 +113,6 @@ bool	parse_east_texture(char *str, t_parse *parse)
 		i++;
 	to_be_erased = &str[i];
 	parse->ea_txt = ft_substr(raw_texture, 0, to_be_erased - raw_texture);
-	free(str);
 	fd = open(parse->ea_txt, O_RDONLY);
 	if (fd == -1)
 		return (parse_err_msg(INVALID_EA));

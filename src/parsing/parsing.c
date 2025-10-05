@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 20:30:52 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:05:50 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,22 @@ bool	open_cub_file(char *map_file, t_parse *parse)
 int	check_elements(t_parse *parse)
 {
 	char	*line;
-	char	*clean_line;
 
 	line = get_next_line(parse->map_fd);
 	while (line)
 	{
-		clean_line = ft_strtrim(line, " \t\n\r");
+		if (ft_strncmp(line, "NO ", 4) == 0 && !parse->no_txt_flag)
+			parse_north_texture(line, parse);
+		else if (ft_strncmp(line, "SO ", 4) == 0 && !parse->so_txt_flag)
+			parse_south_texture(line, parse);
+		else if (ft_strncmp(line, "WE ", 4) == 0 && !parse->we_txt_flag)
+			parse_west_texture(line, parse);
+		else if (ft_strncmp(line, "EA ", 4) == 0 && !parse->ea_txt_flag)
+			parse_east_texture(line, parse);
+		else if ((ft_strncmp(line, "F ", 3) == 0 && !parse->floor_flag)
+			|| ft_strncmp(line, "C ", 3) == 0 && !parse->ceiling_flag)
+			parse_colour(line, parse);
 		free(line);
-		if (ft_strncmp(clean_line, "NO ", 4) == 0 && !parse->no_txt_flag)
-			parse_north_texture(clean_line, parse);
-		else if (ft_strncmp(clean_line, "SO ", 4) == 0 && !parse->so_txt_flag)
-			parse_south_texture(clean_line, parse);
-		else if (ft_strncmp(clean_line, "WE ", 4) == 0 && !parse->we_txt_flag)
-			parse_west_texture(clean_line, parse);
-		else if (ft_strncmp(clean_line, "EA ", 4) == 0 && !parse->ea_txt_flag)
-			parse_east_texture(clean_line, parse);
-		else if (ft_strncmp(clean_line, "F ", 3) == 0 && !parse->floor_flag)
-			parse_colour(clean_line, parse, FLOOR);
-		else if (ft_strncmp(clean_line, "C ", 3) == 0 && !parse->ceiling_flag)
-			parse_colour(clean_line, parse, CEILING);
 		line = get_next_line(parse->map_fd);
 	}
 	if (parse->got_all_elements == 6)
@@ -107,8 +104,9 @@ int	check_map(t_parse *parse)
 		line = get_next_line(parse->map_fd);
 	}
 	line = save_map(parse, line, i);
-	if (is_map_valid(parse) == false || map_fully_walled(parse) == false
-		|| is_map_last_in_file(line, parse, i) == false)
+	if (!is_map_valid(parse) == false || !map_fully_walled(parse) == false
+		|| !is_map_last_in_file(line, parse, i) == false
+		|| !is_valid_player(parse) == false)
 		return (1);
 	map_replace_space_with_zero(parse);
 	return (0);

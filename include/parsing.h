@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 20:26:56 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:05:25 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define INVALID_SO "Invalid path to south texture"
 # define INVALID_EA "Invalid path to east texture"
 # define INVALID_WE "Invalid path to west texture"
+# define MANY_PLAYERS "Players exist more than 1"
 # define INVALID_COLOUR "Invalid colour"
 # define NOT_XPM_FILE "Not a .xpm type of file for texture"
 # define INVALID_MAP "Map is invalid"
@@ -44,21 +45,22 @@ typedef struct s_parse
 	char	*we_txt;			//malloc
 	int		floor_colour;		
 	int		ceiling_colour;
+	char	player_direction;
+	int		player_row;
+	int		player_col;
 	bool	no_txt_flag;
 	bool	so_txt_flag;
 	bool	we_txt_flag;
 	bool	ea_txt_flag;	
 	bool	floor_flag;
 	bool	ceiling_flag;
+	int		player_count;
 	int		map_height;
 	int		start_line;
 	int		last_line;
 	int		map_width;
 	int		width_start;
 	int		width_end;
-	int		player_row;
-	int		player_col;
-	char	player_direction;
 	int		map_fd;
 	char	*err_msg;
 }	t_parse;
