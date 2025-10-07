@@ -36,6 +36,9 @@ SRC_PARSING = parsing
 # Directories of Raycasting
 SRC_RAYCASTING = raycasting
 
+# Directories of Utils
+SRC_UTILS = utils
+
 # Compiler & flags
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
@@ -45,9 +48,18 @@ RM = rm -rf
 SRC = $(addprefix $(SRC_DIR)/, \
 		main.c \
 		$(addprefix $(SRC_PARSING)/, \
-		parsing.c) \
+		colours.c \
+		map.c \
+		parsing.c \
+		player.c \
+		search_map_details.c \
+		textures.c \
+		utils_char.c \
+		utils.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
-		raycasting.c))
+		raycasting.c) \
+		$(addprefix $(SRC_UTILS)/, \
+		cleanup.c))
 
 #$(wildcard $(SRC_DIR)/token/*.c)
 

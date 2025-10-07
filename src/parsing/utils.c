@@ -5,36 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 19:43:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/05 21:09:08 by aimokhta         ###   ########.fr       */
+/*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
+/*   Updated: 2025/10/07 17:47:51 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	parsing_err_msg(t_parse *parse, char *msg)
+void	parse_err_msg(t_parse *parse, char *msg)
 {
 	if (!parse->err_msg)
-		parse->err_msg = msg;
+		parse->err_msg = ft_strdup(msg);
 }
 
-bool	is_char_of_map(char c)
+void	free_array(char **str)
 {
-	return (c == '1' || c == '0'
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
 }
 
-bool	not_a_wall(char c)
+bool	accurate_file_type(char *map_filename, char *file_extension)
 {
-	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	char	*ori_file_type;
+
+	ori_file_type = ft_strrchr(map_filename, '.');
+	if (!ori_file_type || ft_strncmp(ori_file_type, file_extension,
+			ft_strlen(file_extension) + 1) != 0)
+		return (false);
+	return (true);
 }
 
-bool	skip_whitespace(char c)
+int	openable_file(char *map_filename, int fd)
 {
-	return (c == ' ' || c == '\t');
+	fd = open(map_filename, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	return (fd);
 }
 
-bool	last_char_of_line(char c)
+void	parsing_cleanup(t_parse *parse)
 {
-	return (c == '\n' || c == '\0');
+	if (parse->so_txt)
+		free(parse->so_txt);
+	if (parse->no_txt)
+		free(parse->no_txt);
+	if (parse->we_txt)
+		free(parse->we_txt);
+	if (parse->ea_txt)
+		free(parse->ea_txt);
+	if (parse->map)
+		free_array(parse->map);
+	if (parse->err_msg)
+		free(parse->err_msg);
 }
