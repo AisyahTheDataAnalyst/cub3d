@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 19:16:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/08 19:56:48 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,24 @@ bool	parse_colour(char *str, t_parse *parse)
 static bool	filter_raw_colour(char *raw_colour, t_parse *parse)
 {
 	int		i;
-	char	*raw_colour_copy;
 
+	if (have_space_between_numbers(raw_colour))
+		return (parse_err_msg(parse, INVALID_COLOUR), false);
 	i = -1;
-	raw_colour_copy = ft_strdup(raw_colour);
-	while (raw_colour_copy[++i])
+	while (raw_colour[++i])
 	{
-		if (have_space_between_numbers(raw_colour_copy))
-			return (free(raw_colour_copy),
-				parse_err_msg(parse, INVALID_COLOUR), false);
-		else if ((i == 0 && ft_isdigit(raw_colour_copy[i]))
-			|| (i == (int)ft_strlen(raw_colour_copy) - 1
-				&& ft_isdigit(raw_colour_copy[i]))
-			|| char_repitition(raw_colour_copy, ',') == 2
-			|| (ft_isdigit(raw_colour_copy[i])) 
-			|| skip_whitespace(raw_colour_copy[i])
-			|| raw_colour_copy[i] == ',')
+		if ((i == 0 && ft_isdigit(raw_colour[i]))
+			|| (i == (int)ft_strlen(raw_colour) - 1
+				&& ft_isdigit(raw_colour[i]))
+			|| char_repitition(raw_colour, ',') == 2
+			|| (ft_isdigit(raw_colour[i]))
+			|| skip_whitespace(raw_colour[i])
+			|| raw_colour[i] == ',')
 			continue ;
 		else
-			return (free(raw_colour_copy),
-				parse_err_msg(parse, INVALID_COLOUR), false);
+			return (parse_err_msg(parse, INVALID_COLOUR), false);
 	}
-	return (free(raw_colour_copy), true);
+	return (true);
 }
 
 static bool	have_space_between_numbers(char *colour)
