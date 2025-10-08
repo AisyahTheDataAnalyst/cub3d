@@ -6,14 +6,14 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:33:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/07 16:12:24 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/08 09:49:46 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 static bool	search_height_start_map\
-(t_parse *parse, bool start_flag, int i, char *line);
+(t_parse *parse, bool found_start, int i, char *line);
 static bool	search_height_end_map\
 (t_parse *parse, int i, int j, char *line);
 
@@ -22,27 +22,27 @@ char	*search_map_details(t_parse *parse)
 	char	*line;
 	int		i;
 	int		j;
-	bool	start_flag;
-	bool	end_flag;
+	bool	found_start;
+	bool	found_end;
 
 	i = 0;
-	start_flag = false;
-	end_flag = false;
+	found_start = false;
+	found_end = false;
 	line = get_next_line(parse->map_fd);
-	printf("im in search map details\n");
+	// printf("im in search map details\n");
 	while (line && ++i)
 	{
-		printf("line= %s\n", line);
-		printf("test1\n");
+		// printf("line= %s\n", line);
+		// printf("test1\n");
 		j = 0;
-		printf("i: %d\n", i);
+		// printf("i: %d\n", i);
 		while (line[j])
 		{
-			printf("j: %c\n", line[j]);
-			printf("test2\n");
-			start_flag = search_height_start_map(parse, start_flag, i, line);
-			end_flag = search_height_end_map(parse, i, j, line);
-			if (end_flag)
+			// printf("j: %c\n", line[j]);
+			// printf("test2\n");
+			found_start = search_height_start_map(parse, found_start, i, line);
+			found_end = search_height_end_map(parse, i, j, line);
+			if (found_end)
 				return (line);
 			j++;
 		}
@@ -53,27 +53,27 @@ char	*search_map_details(t_parse *parse)
 }
 
 static bool	search_height_start_map\
-(t_parse *parse, bool start_flag, int i, char *line)
+(t_parse *parse, bool found_start, int i, char *line)
 {
-	printf("test3\n");
-	if (only_chars_of_map_in_whole_line(line))
+	// printf("test3\n");
+	if (only_chars_of_map_in_whole_line(line) == 1)
 	{
-		if (start_flag == false)
+		if (found_start == false)
 		{
 			parse->height_start = i;
-			printf("adjust height_s : %d\n", parse->height_start);
-			start_flag = true;
+			// printf("adjust height_s : %d\n", parse->height_start);
+			found_start = true;
 		}
 	}
-	printf("test3\n");
-	return (start_flag);
+	// printf("test3\n");
+	return (found_start);
 }
 
 static bool	search_height_end_map\
 (t_parse *parse, int i, int j, char *line)
 {
-	printf("test4\n");
-	if (only_chars_of_map_in_whole_line(line) && i >= parse->height_start)
+	// printf("test4\n");
+	if (only_chars_of_map_in_whole_line(line) == 1 && i >= parse->height_start)
 	{
 		parse->height_end = i;
 		if (is_char_of_map(line[j]))

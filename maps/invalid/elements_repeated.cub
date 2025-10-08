@@ -8,9 +8,10 @@ SO   ./textures/south_wall.xpm
 WE  	  ./textures/west_wall.xpm
 			F 150,15,1
 
+	  NO ./textures/north_wall.xpm
+	  
     C 	   1,15,150
 11111
 10001
-10N01
-10001
+100N1
 11111

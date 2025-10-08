@@ -1,0 +1,15 @@
+	  NO ./textures/north_wall/hehe.xpm
+
+
+          EA ./textures/east_wall/ughh.xpm
+
+SO   ./textures/holla/south_wall.xpm
+WE  	  ./umm/textures/west_wall.xpm
+			F 150,15,1
+
+    C 	   1,15,150
+	
+11111 111111
+100011100001
+100N   00001
+111111111111

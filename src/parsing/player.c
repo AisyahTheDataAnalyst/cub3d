@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:53:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/07 17:28:42 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/08 09:47:42 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ bool	is_player_valid(t_parse *parse)
 	y = 0;
 	while (parse->map[y])
 	{
-		printf("y: %d\n", y);
+		// printf("y: %d\n", y);
 		x = 0;
 		while (parse->map[y][x])
 		{
-			printf("x: %d\n", x);
+			// printf("x: %d\n", x);
 			if (parse->map[y][x] == 'N' || parse->map[y][x] == 'S'
 			|| parse->map[y][x] == 'W' || parse->map[y][x] == 'E')
 			{
@@ -39,8 +39,8 @@ bool	is_player_valid(t_parse *parse)
 		}
 		y++;
 	}
-	printf("player_count: %d\n", parse->player_count);
-	printf("HELLOOOOOOO\n");
+	// printf("player_count: %d\n", parse->player_count);
+	// printf("HELLOOOOOOO\n");
 	if (parse->player_count != 1)
 		return (parse_err_msg(parse, INVALID_PLAYER), false);
 	return (true);
