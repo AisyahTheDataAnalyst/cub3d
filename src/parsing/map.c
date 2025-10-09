@@ -6,15 +6,15 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 16:07:33 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:00:33 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col);
-static void	print_map(char **map); // comment later for submission
-static void	print_dup_map(char **dup_map); // comment later for submission
+// static void	print_map(char **map); // comment later for submission
+// static void	print_dup_map(char **dup_map); // comment later for submission
 
 bool	is_map_last_in_file(char *line, t_parse *parse)
 {
@@ -41,28 +41,30 @@ bool	is_map_last_in_file(char *line, t_parse *parse)
 	return (true);
 }
 
+	// printf("in save map before\n");
+	// if (!line)
+	// 	printf("line is empty in save map!\n");
+		// printf("map i : %d\n", i);
+		// printf("map i : %dmap j : %d\n", i, j);
+	// printf("in save map after\n");
+	// print_map(parse->map);
 void	save_map(t_parse *parse)
 {
 	int		i;
 	int		j;
 	char	*line;
 
-	// printf("in save map before\n");
 	i = 0;
 	line = get_next_line(parse->map_fd);
-	if (!line)
-		printf("line is empty in save map!\n");
 	while (line && ++i < parse->height_start)
 	{
 		free(line);
 		line = get_next_line(parse->map_fd);
-		// printf("map i : %d\n", i);
 	}
 	j = 0;
 	parse->map = malloc(sizeof(char *) * (parse->map_height + 1));
 	while (line && i <= parse->height_end)
 	{
-		// printf("map i : %dmap j : %d\n", i, j);
 		parse->map[j++] = ft_substr(line, parse->width_start, parse->map_width);
 		i++;
 		free(line);
@@ -72,15 +74,14 @@ void	save_map(t_parse *parse)
 		free(line);
 	parse->map[j] = NULL;
 	close(parse->map_fd);
-	// printf("in save map after\n");
-	print_map(parse->map);
 }
 
+	// print_dup_map(dup_map);
 bool	is_map_valid(t_parse *parse)
 {
 	char	**dup_map;
 	int		i;
-	bool	status; //
+	bool	status;
 
 	if (!is_player_valid(parse))
 		return (parse_err_msg(parse, INVALID_PLAYER), false);
@@ -89,8 +90,8 @@ bool	is_map_valid(t_parse *parse)
 	while (parse->map[++i])
 		dup_map[i] = ft_strdup(parse->map[i]);
 	dup_map[i] = NULL;
-	status = flood_fill(parse, dup_map, parse->player_y_pos, parse->player_x_pos);
-	print_dup_map(dup_map);
+	status = flood_fill(parse,
+			dup_map, parse->player_y_pos, parse->player_x_pos);
 	if (!status)
 		return (free_array(dup_map), parse_err_msg(parse, INVALID_MAP), false);
 	return (free_array(dup_map), true);
@@ -128,42 +129,44 @@ void	map_replace_space_with_zero(t_parse *parse)
 	}
 }
 
-static void	print_map(char **map)
-{
-	int	i;
-	int	j;
+// static void	print_map(char **map)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	if (!map[i])
-		return (ft_putstr_fd("map is null!\n", 2));
-	while (map[i])
-	{
-		j = -1;
-		while (map[i][++j] && map[i][j] != '\n')
-			printf("%c", map[i][j]);
-		printf("\n");
-		i++;
-	}
-}
+// 	i = 0;
+// 	if (!map[i])
+// 		return (ft_putstr_fd("map is null!\n", 2));
+// 	while (map[i])
+// 	{
+// 		j = -1;
+// 		while (map[i][++j] && map[i][j] != '\n')
+// 			printf("%c", map[i][j]);
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
 
-static void	print_dup_map(char **dup_map)
-{
-	int	i;
-	int	j;
+// static void	print_dup_map(char **dup_map)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	if (!dup_map[i])
-		return (ft_putstr_fd("dup_map is null!\n", 2));
-	printf("\nflooded:\n");
-	while (dup_map[i])
-	{
-		j = -1;
-		while (dup_map[i][++j] && dup_map[i][j] != '\n')
-			printf("%c", dup_map[i][j]);
-		printf("\n");
-		i++;
-	}
-}
+// 	i = 0;
+// 	if (!dup_map[i])
+// 		return (ft_putstr_fd("dup_map is null!\n", 2));
+// 	printf("\nflooded:\n");
+// 	while (dup_map[i])
+// 	{
+// 		j = -1;
+// 		while (dup_map[i][++j] && dup_map[i][j] != '\n')
+// 			printf("%c", dup_map[i][j]);
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
+
+//////////////////////////////////////////////////////////////
 
 	// line = get_next_line(parse->map_fd);
 	// y = 0;
@@ -193,10 +196,10 @@ static void	print_dup_map(char **dup_map)
 // 		x = -1;
 // 		while (parse->map[y][x++])
 // 		{
-// 			if (not_a_wall(parse->map[y][x]) && (\
-// parse->map[y][x + 1] == ' ' || last_char_of_line(parse->map[y][x + 1]) || \
-// parse->map[y][x - 1] == ' ' || x == 0 || \
-// parse->map[y + 1][x] == ' ' || last_char_of_line(parse->map[y + 1][x]) || \
+// 			if (not_a_wall(parse->map[y][x]) && (
+// parse->map[y][x + 1] == ' ' || last_char_of_line(parse->map[y][x + 1]) ||
+// parse->map[y][x - 1] == ' ' || x == 0 ||
+// parse->map[y + 1][x] == ' ' || last_char_of_line(parse->map[y + 1][x]) ||
 // parse->map[y - 1][x] == ' ' || y == 0))
 // 				return (false);
 // 			else if (not_a_wall(parse->map[x][y]) &&

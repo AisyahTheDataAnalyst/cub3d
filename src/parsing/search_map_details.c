@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:33:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 09:49:46 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:56:30 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,11 @@ char	*search_map_details(t_parse *parse)
 	found_start = false;
 	found_end = false;
 	line = get_next_line(parse->map_fd);
-	// printf("im in search map details\n");
 	while (line && ++i)
 	{
-		// printf("line= %s\n", line);
-		// printf("test1\n");
 		j = 0;
-		// printf("i: %d\n", i);
 		while (line[j])
 		{
-			// printf("j: %c\n", line[j]);
-			// printf("test2\n");
 			found_start = search_height_start_map(parse, found_start, i, line);
 			found_end = search_height_end_map(parse, i, j, line);
 			if (found_end)
@@ -55,24 +49,20 @@ char	*search_map_details(t_parse *parse)
 static bool	search_height_start_map\
 (t_parse *parse, bool found_start, int i, char *line)
 {
-	// printf("test3\n");
 	if (only_chars_of_map_in_whole_line(line) == 1)
 	{
 		if (found_start == false)
 		{
 			parse->height_start = i;
-			// printf("adjust height_s : %d\n", parse->height_start);
 			found_start = true;
 		}
 	}
-	// printf("test3\n");
 	return (found_start);
 }
 
 static bool	search_height_end_map\
 (t_parse *parse, int i, int j, char *line)
 {
-	// printf("test4\n");
 	if (only_chars_of_map_in_whole_line(line) == 1 && i >= parse->height_start)
 	{
 		parse->height_end = i;
@@ -137,7 +127,7 @@ static bool	search_height_end_map\
 // 	return (search_map_width_helper_1(parse, line, curr_line, i));
 // }
 
-// int	search_map_width_helper_1(t_parse *parse, \
+// int	search_map_width_helper_1(t_parse *parse,
 // char *line, char *curr_line, int i)
 // {
 // 	while (line && curr_line >= parse->height_start

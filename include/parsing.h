@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 15:36:56 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:03:57 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # include <stdbool.h> //bool
 # include <fcntl.h> // open
 # include <limits.h> // INT_MIN, INT_MAX
-
-# include <stdio.h>
+# include <stdio.h> // printf
 
 // err_msg
 # define MAP_IS_NOT_LAST "Map is not at the last position in file"
@@ -40,10 +39,7 @@
 # define UNOPEN_TXT_FILE "Failed to open texture file"
 # define INVALID_IDENTIFIER "Map file exists invalid identifier"
 # define EMPTY_MAP "Map file is empty"
-// # define INVALID_NO "Invalid path to north texture"
-// # define INVALID_SO "Invalid path to south texture"
-// # define INVALID_EA "Invalid path to east texture"
-// # define INVALID_WE "Invalid path to west texture"
+
 # define FLOOR 0
 # define CEILING 1
 
@@ -84,7 +80,6 @@ typedef struct s_parse
 	char	*err_msg;
 }	t_parse;
 
-
 // parsing.c
 int		parsing(t_parse *parse, char **av);
 int		parse_elements(t_parse *parse, char *line);
@@ -124,8 +119,5 @@ void	free_array(char **str);
 bool	accurate_file_type(char *map_filename, char *file_extension);
 int		openable_file(char *map_filename, int fd);
 void	parsing_cleanup(t_parse *parse);
-
-
-
 
 #endif

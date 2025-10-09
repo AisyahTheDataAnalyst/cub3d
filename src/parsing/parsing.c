@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 15:38:57 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:05:11 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ int	parse_elements(t_parse *parse, char *line)
 	return (got_all_elements(parse, line));
 }
 
-	// printf("notxt: %d\nsotxt: %d\nwetxt: %d\neatxt: %d\nf: %d\nc: %d\n", parse->no_txt_count, parse->so_txt_count, parse->we_txt_count, parse->ea_txt_count, parse->floor_count, parse->ceiling_count);
+	// printf("notxt: %d\nsotxt: %d\nwetxt: %d\neatxt: %d\nf: %d\nc: %d\n",
+	// parse->no_txt_count, parse->so_txt_count, parse->we_txt_count,
+	// parse->ea_txt_count, parse->floor_count, parse->ceiling_count);
 		// printf("got all elements!\n");
 static bool	got_all_elements(t_parse *parse, char *line)
 {
@@ -111,6 +113,12 @@ static bool	got_all_elements(t_parse *parse, char *line)
 	return (true);
 }
 
+	// printf("height_s: %d height_e: %d\n", 
+	// parse->height_start, parse->height_end);
+	// printf("width_s: %d width_e: %d\n", 
+	// parse->width_start, parse->width_end);
+	// printf("m_height: %d m_width: %d\n", 
+	// parse->map_height, parse->map_width);
 int	parse_map(t_parse *parse)
 {
 	char	*line;
@@ -119,8 +127,6 @@ int	parse_map(t_parse *parse)
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
 	line = search_map_details(parse);
-	printf("height_s: %d height_e: %d\n", parse->height_start, parse->height_end);
-	printf("width_s: %d width_e: %d\n", parse->width_start, parse->width_end);
 	if (!is_map_last_in_file(line, parse))
 		return (parse_err_msg(parse, MAP_IS_NOT_LAST), 0);
 	if ((parse->height_start < 7 && parse->height_start != INT_MAX)
@@ -128,7 +134,6 @@ int	parse_map(t_parse *parse)
 		return (parse_err_msg(parse, INVALID_MAP), 0);
 	parse->map_height = parse->height_end - parse->height_start + 1;
 	parse->map_width = parse->width_end - parse->width_start + 1;
-	printf("m_height: %d m_width: %d\n", parse->map_height, parse->map_width);
 	if (parse->map_height < 3 || parse->map_width < 3)
 		return (parse_err_msg(parse, INVALID_MAP), 0);
 	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);

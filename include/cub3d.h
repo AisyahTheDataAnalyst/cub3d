@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:39 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/07 17:16:56 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:58:56 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "parsing.h"
 
-
+void	all_cleanup(t_parse *parse);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:18:51 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 13:08:42 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:43:57 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@ bool	parse_north_texture(char *str, t_parse *parse)
 	if (++parse->no_txt_count > 1)
 		return (parse_err_msg(parse, INVALID_NO_COUNT), false);
 	parse->no_txt = ft_strtrim(raw_texture, " \n\t\r");
-	printf("no_txt= %s\n", parse->no_txt);
 	if (!accurate_file_type(parse->no_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_NO), false);
 	parse->no_txt_fd = openable_file(parse->no_txt, parse->no_txt_fd);
 	if (parse->no_txt_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_TXT_FILE), false);
 	return (true);
-	// printf("done north text!\n");
 }
 
 bool	parse_south_texture(char *str, t_parse *parse)
@@ -52,7 +50,6 @@ bool	parse_south_texture(char *str, t_parse *parse)
 	if (++parse->so_txt_count > 1)
 		return (parse_err_msg(parse, INVALID_SO_COUNT), false);
 	parse->so_txt = ft_strtrim(raw_texture, " \n\t\r");
-	// printf("%s\n", parse->so_txt);
 	if (!accurate_file_type(parse->so_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_SO), false);
 	parse->so_txt_fd = openable_file(parse->so_txt, parse->so_txt_fd);
