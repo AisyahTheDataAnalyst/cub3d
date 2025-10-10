@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:43:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/08 15:30:18 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/10 13:17:44 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,3 @@ bool	other_edge_cases_elements(char *str, t_parse *parse)
 		return (true);
 	return (false);
 }
-
-// bool	last_char_of_line(char c)
-// {
-// 	return (c == '\n' || c == '\0');
-// }
-
-// bool	not_a_wall(char c)
-// {
-// 	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
-// }

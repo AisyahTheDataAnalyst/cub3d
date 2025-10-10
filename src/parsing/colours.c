@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 11:30:50 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:35:35 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ static bool	filter_raw_colour(char *raw_colour, t_parse *parse)
 				&& ft_isdigit(raw_colour[i]))
 			|| ft_isdigit(raw_colour[i])
 			|| skip_whitespace(raw_colour[i])
-			|| raw_colour[i] == ',' || raw_colour[i] == '+')
+			|| raw_colour[i] == ','
+			|| (raw_colour[i] == '+' && i == 0)
+			|| (raw_colour[i] == '+' && i > 0
+				&& (raw_colour[i - 1] == ' ' || (raw_colour[i - 1] == ','))))
 			continue ;
 		else
 			return (parse_err_msg(parse, INVALID_COLOUR), false);
@@ -75,7 +78,7 @@ static bool	have_space_between_numbers(char *colour)
 	while (colour[i])
 	{
 		while (colour[i] && (colour[i] == '-' || colour[i] == '+'))
-			i++; 
+			i++;
 		while (colour[i] && ft_isdigit(colour[i]))
 			i++;
 		while (colour[i] && skip_whitespace(colour[i]))

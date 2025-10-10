@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 09:43:30 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/07 11:37:15 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:12:26 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,16 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*call;
-
+	
+	if (fd == -2)
+	{
+		if (call)
+		{
+			free(call);
+			call = NULL;
+		}
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	call = ft_reading(fd, call);

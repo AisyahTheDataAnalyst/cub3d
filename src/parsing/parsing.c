@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 11:05:11 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/10 15:17:47 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,17 @@ int	parse_elements(t_parse *parse, char *line)
 		i = 0;
 		while (line[i] && skip_whitespace(line[i]))
 			i++;
-		if (ft_strncmp(&line[i], "NO ", 3) == 0)
+		if (!ft_strncmp(&line[i], "NO", 2) && skip_whitespace(line[i + 2]))
 			parse->elements_status = parse_north_texture(&line[i], parse);
-		else if (ft_strncmp(&line[i], "SO ", 3) == 0)
+		else if (!ft_strncmp(&line[i], "SO", 2) && skip_whitespace(line[i + 2]))
 			parse->elements_status = parse_south_texture(&line[i], parse);
-		else if (ft_strncmp(&line[i], "WE ", 3) == 0)
+		else if (!ft_strncmp(&line[i], "WE", 2) && skip_whitespace(line[i + 2]))
 			parse->elements_status = parse_west_texture(&line[i], parse);
-		else if (ft_strncmp(&line[i], "EA ", 3) == 0)
+		else if (!ft_strncmp(&line[i], "EA", 2) && skip_whitespace(line[i + 2]))
 			parse->elements_status = parse_east_texture(&line[i], parse);
-		else if (!ft_strncmp(&line[i], "F ", 2)
-			|| !ft_strncmp(&line[i], "C ", 2))
+		else if ((!ft_strncmp(&line[i], "F", 1)
+				|| !ft_strncmp(&line[i], "C", 1))
+			&& skip_whitespace(line[i + 1]))
 			parse->elements_status = parse_colour(&line[i], parse);
 		else
 			parse->elements_status = other_edge_cases_elements(&line[i], parse);

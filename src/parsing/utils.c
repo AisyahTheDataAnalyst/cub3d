@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 10:44:14 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/10 15:22:04 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	parsing_cleanup(t_parse *parse)
 		close(parse->ea_txt_fd);
 	if (parse->map_fd > 3)
 		close(parse->map_fd);
+	get_next_line(-2);
 }

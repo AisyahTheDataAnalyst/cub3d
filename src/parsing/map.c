@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 11:00:33 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/10 15:19:31 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ bool	is_map_valid(t_parse *parse)
 {
 	char	**dup_map;
 	int		i;
-	bool	status;
+	bool	ff_status;
+	// bool	char_status;
 
 	if (!is_player_valid(parse))
 		return (parse_err_msg(parse, INVALID_PLAYER), false);
@@ -90,9 +91,11 @@ bool	is_map_valid(t_parse *parse)
 	while (parse->map[++i])
 		dup_map[i] = ft_strdup(parse->map[i]);
 	dup_map[i] = NULL;
-	status = flood_fill(parse,
+	ff_status = flood_fill(parse,
 			dup_map, parse->player_y_pos, parse->player_x_pos);
-	if (!status)
+	// if (ff_status)
+	// 	char_status = map_has_valid_chars_only(parse->map);
+	if (!ff_status) // || !char_status)
 		return (free_array(dup_map), parse_err_msg(parse, INVALID_MAP), false);
 	return (free_array(dup_map), true);
 }
@@ -101,7 +104,7 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
 {
 	if (row < 0 || col < 0
 		|| row >= parse->map_height || col >= parse->map_width
-		|| dup_map[row][col] == ' ')
+		|| skip_whitespace(dup_map[row][col]))
 		return (false);
 	if (dup_map[row][col] == 'F' || dup_map[row][col] == '1')
 		return (true);
@@ -112,21 +115,6 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
 		|| !flood_fill(parse, dup_map, row, col - 1))
 		return (false);
 	return (true);
-}
-
-void	map_replace_space_with_zero(t_parse *parse)
-{
-	int	y;
-	int	x;
-
-	y = -1;
-	while (parse->map[++y])
-	{
-		x = -1;
-		while (parse->map[y][++x])
-			if (parse->map[y][x] == ' ')
-				parse->map[y][x] = '0';
-	}
 }
 
 // static void	print_map(char **map)

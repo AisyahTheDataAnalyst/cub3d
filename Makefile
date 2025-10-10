@@ -53,6 +53,7 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		parsing.c \
 		player.c \
 		search_map_details.c \
+		tabs_in_map.c \
 		textures.c \
 		utils_char.c \
 		utils.c) \
@@ -123,7 +124,17 @@ norm :
 	@norminette libft
 	@echo "${GREEN}\n       ALL CLEAR!✅✅✅\n${RESET}"
 
-.PHONY: bonus all clean fclean re norm
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(ARG)
+
+fdleaks:
+	valgrind --track-fds=yes ./$(NAME) $(ARG)
+
+# fsan:
+# 	$(CFLAGS) -fsanitize=address
+
+.PHONY: bonus all clean fclean re norm valgrind fdleaks fsan
+
 
 # -I(include directory) - Tells the compiler to look for header files
 # -L(directory) - Tells the compiler to look for .a library path in this folder
