@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/10 15:39:29 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:37:12 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 	map.parse = &parse;
 	if (parsing(map.parse, av) == 1)
 		return (parsing_cleanup(map.parse), 1);
-	ft_putendl_fd("Success!", 1);
+	ft_putendl_fd("Success parsing!", 1);
 	// raycasting();
 	all_cleanup(&map);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:33:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 10:56:30 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:18:42 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*search_map_details(t_parse *parse)
 static bool	search_height_start_map\
 (t_parse *parse, bool found_start, int i, char *line)
 {
-	if (only_chars_of_map_in_whole_line(line) == 1)
+	if (only_chars_of_map_and_whitespace_in_whole_line(line) == 1)
 	{
 		if (found_start == false)
 		{
@@ -63,7 +63,8 @@ static bool	search_height_start_map\
 static bool	search_height_end_map\
 (t_parse *parse, int i, int j, char *line)
 {
-	if (only_chars_of_map_in_whole_line(line) == 1 && i >= parse->height_start)
+	if (only_chars_of_map_and_whitespace_in_whole_line(line) == 1
+		&& i >= parse->height_start)
 	{
 		parse->height_end = i;
 		if (is_char_of_map(line[j]))

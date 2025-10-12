@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 11:03:57 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:58:06 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,27 +97,30 @@ bool	parse_colour(char *str, t_parse *parse);
 // search_map_details.c
 char	*search_map_details(t_parse *parse);
 
-// map.c
+// map_1.c
 bool	is_map_last_in_file(char *line, t_parse *parse);
+bool	map_has_valid_chars_only(t_parse *parse);
 void	save_map(t_parse *parse);
-bool	is_map_valid(t_parse *parse);
-void	map_replace_space_with_zero(t_parse *parse);
 
-// player.c
-bool	is_player_valid(t_parse *parse);
+// map_2.c
+bool	is_map_valid(t_parse *parse);
+void	map_replace_space_with_wall(t_parse *parse);
+// void	print_map(char **map)
+// void	print_dup_map(char **dup_map)
 
 // utils_char.c
 bool	is_char_of_map(char c);
+int		only_chars_of_map_and_whitespace_in_whole_line(char *line);
 int		only_chars_of_map_in_whole_line(char *line);
 bool	skip_whitespace(char c);
 int		char_repitition(char *str, char c);
-bool	other_edge_cases_elements(char *str, t_parse *parse);
 
 // utils.c
+void	init_parsing(t_parse *parse, char **av);
 void	parse_err_msg(t_parse *parse, char *msg);
 void	free_array(char **str);
 bool	accurate_file_type(char *map_filename, char *file_extension);
 int		openable_file(char *map_filename, int fd);
-void	parsing_cleanup(t_parse *parse);
+
 
 #endif

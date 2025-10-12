@@ -6,13 +6,13 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/10 15:17:47 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:51:30 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static void	init_parsing(t_parse *parse, char **av);
+static bool	other_edge_cases_elements(char *str, t_parse *parse);
 static bool	got_all_elements(t_parse *parse, char *line);
 
 int	parsing(t_parse *parse, char **av)
@@ -35,21 +35,6 @@ int	parsing(t_parse *parse, char **av)
 		return (ft_putstr_fd("Error\nMap is not properly structured: ", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
 	return (0);
-}
-
-static void	init_parsing(t_parse *parse, char **av)
-{
-	parse->map_filename = av[1];
-	parse->height_start = INT_MAX;
-	parse->height_end = -1;
-	parse->width_start = INT_MAX;
-	parse->width_end = -1;
-	parse->map_fd = -1;
-	parse->so_txt_fd = -1;
-	parse->no_txt_fd = -1;
-	parse->we_txt_fd = -1;
-	parse->ea_txt_fd = -1;
-	parse->elements_status = true;
 }
 
 int	parse_elements(t_parse *parse, char *line)
@@ -79,6 +64,23 @@ int	parse_elements(t_parse *parse, char *line)
 		line = get_next_line(parse->map_fd);
 	}
 	return (got_all_elements(parse, line));
+}
+
+static bool	other_edge_cases_elements(char *str, t_parse *parse)
+{
+	if (!str)
+		return (true);
+	parse->not_empty_map = true;
+	if (only_chars_of_map_and_whitespace_in_whole_line(str) < 0)
+	{
+		parse->invalid_identifier = true;
+		return (false);
+	}
+	if (only_chars_of_map_and_whitespace_in_whole_line(str) == 0)
+		return (true);
+	if (only_chars_of_map_and_whitespace_in_whole_line(str) == 1)
+		return (true);
+	return (false);
 }
 
 	// printf("notxt: %d\nsotxt: %d\nwetxt: %d\neatxt: %d\nf: %d\nc: %d\n",
@@ -137,12 +139,14 @@ int	parse_map(t_parse *parse)
 	parse->map_width = parse->width_end - parse->width_start + 1;
 	if (parse->map_height < 3 || parse->map_width < 3)
 		return (parse_err_msg(parse, INVALID_MAP), 0);
+	if (!map_has_valid_chars_only(parse))
+		return (0);
 	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
 	save_map(parse);
 	if (!is_map_valid(parse))
 		return (0);
-	map_replace_space_with_zero(parse);
+	map_replace_space_with_wall(parse);
 	return (1);
 }

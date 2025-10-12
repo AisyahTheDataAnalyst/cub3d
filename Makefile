@@ -41,7 +41,7 @@ SRC_UTILS = utils
 
 # Compiler & flags
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 RM = rm -rf
 
 # Source files
@@ -49,14 +49,14 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		main.c \
 		$(addprefix $(SRC_PARSING)/, \
 		colours.c \
-		map.c \
+		map_1.c \
+		map_2.c \
 		parsing.c \
-		player.c \
 		search_map_details.c \
-		tabs_in_map.c \
 		textures.c \
 		utils_char.c \
-		utils.c) \
+		utils.c \
+		view_direction.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
 		raycasting.c) \
 		$(addprefix $(SRC_UTILS)/, \
@@ -129,6 +129,8 @@ valgrind:
 
 fdleaks:
 	valgrind --track-fds=yes ./$(NAME) $(ARG)
+#example way of writing in terminal : ARG=maps/valid/.cub 
+
 
 # fsan:
 # 	$(CFLAGS) -fsanitize=address
