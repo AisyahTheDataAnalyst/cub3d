@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/12 19:53:34 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:17:03 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	map_has_valid_chars_only(t_parse *parse)
 		// printf("map i : %dmap j : %d\n", i, j);
 	// printf("in save map after\n");
 	// print_map(parse->map);
-void	save_map(t_parse *parse)
+void	save_map(t_parse *parse, t_map *map)
 {
 	int		i;
 	int		j;
@@ -89,17 +89,17 @@ void	save_map(t_parse *parse)
 		line = get_next_line(parse->map_fd);
 	}
 	j = 0;
-	parse->map = malloc(sizeof(char *) * (parse->map_height + 1));
+	map->map = malloc(sizeof(char *) * (parse->map_height + 1));
 	while (line && i <= parse->height_end)
 	{
-		parse->map[j++] = substring_into_map(line, parse);
+		map->map[j++] = substring_into_map(line, parse);
 		i++;
 		free(line);
 		line = get_next_line(parse->map_fd);
 	}
 	if (line)
 		free(line);
-	parse->map[j] = NULL;
+	map->map[j] = NULL;
 	close(parse->map_fd);
 }
 

@@ -6,13 +6,13 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/12 18:58:03 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:25:11 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	init_parsing(t_parse *parse, char **av)
+void	init_parsing(t_parse *parse, t_map *map, char **av)
 {
 	parse->map_filename = av[1];
 	parse->height_start = INT_MAX;
@@ -20,10 +20,10 @@ void	init_parsing(t_parse *parse, char **av)
 	parse->width_start = INT_MAX;
 	parse->width_end = -1;
 	parse->map_fd = -1;
-	parse->so_txt_fd = -1;
-	parse->no_txt_fd = -1;
-	parse->we_txt_fd = -1;
-	parse->ea_txt_fd = -1;
+	map->so_txt_fd = -1;
+	map->no_txt_fd = -1;
+	map->we_txt_fd = -1;
+	map->ea_txt_fd = -1;
 	parse->elements_status = true;
 }
 

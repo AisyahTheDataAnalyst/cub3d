@@ -52,11 +52,11 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		map_1.c \
 		map_2.c \
 		parsing.c \
+		player.c \
 		search_map_details.c \
 		textures.c \
 		utils_char.c \
-		utils.c \
-		view_direction.c) \
+		utils.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
 		raycasting.c) \
 		$(addprefix $(SRC_UTILS)/, \

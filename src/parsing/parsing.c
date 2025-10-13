@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/12 19:51:30 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:26:53 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static bool	other_edge_cases_elements(char *str, t_parse *parse);
 static bool	got_all_elements(t_parse *parse, char *line);
 
-int	parsing(t_parse *parse, char **av)
+int	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
 {
 	char	*line;
 
-	init_parsing(parse, av);
+	init_parsing(parse, map, av);
 	if (!accurate_file_type(parse->map_filename, ".cub"))
 		return (parse_err_msg(parse, NOT_CUB_FILE), ft_putendl_fd("Error", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
@@ -28,16 +28,18 @@ int	parsing(t_parse *parse, char **av)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE),
 			ft_putendl_fd("Error", 2), ft_putendl_fd(parse->err_msg, 2), 1);
 	line = get_next_line(parse->map_fd);
-	if (!parse_elements(parse, line))
+	if (!parse_elements(parse, map, line))
 		return (ft_putstr_fd("Error\nElements is not properly structured: ", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
-	if (!parse_map(parse))
+	if (!parse_map(parse, player, map))
 		return (ft_putstr_fd("Error\nMap is not properly structured: ", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
+	if (!direction_plane(player))
+		return (ft_putendl_fd("Error\nView is not properly structured", 2), 1);
 	return (0);
 }
 
-int	parse_elements(t_parse *parse, char *line)
+int	parse_elements(t_parse *parse, t_map *map, char *line)
 {
 	int		i;
 
@@ -47,17 +49,17 @@ int	parse_elements(t_parse *parse, char *line)
 		while (line[i] && skip_whitespace(line[i]))
 			i++;
 		if (!ft_strncmp(&line[i], "NO", 2) && skip_whitespace(line[i + 2]))
-			parse->elements_status = parse_north_texture(&line[i], parse);
+			parse->elements_status = parse_north_texture(&line[i], parse, map);
 		else if (!ft_strncmp(&line[i], "SO", 2) && skip_whitespace(line[i + 2]))
-			parse->elements_status = parse_south_texture(&line[i], parse);
+			parse->elements_status = parse_south_texture(&line[i], parse, map);
 		else if (!ft_strncmp(&line[i], "WE", 2) && skip_whitespace(line[i + 2]))
-			parse->elements_status = parse_west_texture(&line[i], parse);
+			parse->elements_status = parse_west_texture(&line[i], parse, map);
 		else if (!ft_strncmp(&line[i], "EA", 2) && skip_whitespace(line[i + 2]))
-			parse->elements_status = parse_east_texture(&line[i], parse);
+			parse->elements_status = parse_east_texture(&line[i], parse, map);
 		else if ((!ft_strncmp(&line[i], "F", 1)
 				|| !ft_strncmp(&line[i], "C", 1))
 			&& skip_whitespace(line[i + 1]))
-			parse->elements_status = parse_colour(&line[i], parse);
+			parse->elements_status = parse_colour(&line[i], parse, map);
 		else
 			parse->elements_status = other_edge_cases_elements(&line[i], parse);
 		free(line);
@@ -122,7 +124,7 @@ static bool	got_all_elements(t_parse *parse, char *line)
 	// parse->width_start, parse->width_end);
 	// printf("m_height: %d m_width: %d\n", 
 	// parse->map_height, parse->map_width);
-int	parse_map(t_parse *parse)
+int	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
 
@@ -144,9 +146,9 @@ int	parse_map(t_parse *parse)
 	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
-	save_map(parse);
-	if (!is_map_valid(parse))
+	save_map(parse, map);
+	if (!is_map_valid(parse, player, map))
 		return (0);
-	map_replace_space_with_wall(parse);
+	map_replace_space_with_wall(map);
 	return (1);
 }

@@ -1,7 +1,7 @@
-NO ./textures/north_wall.xpm
-SO ./textures/south_wall.xpm
-WE ./textures/west_wall.xpm
-EA ./textures/east_wall.xpm
+NO ./textures/bricks/north_wall.xpm
+SO ./textures/bricks/south_wall.xpm
+WE ./textures/bricks/west_wall.xpm
+EA ./textures/bricks/east_wall.xpm
 
 F 64,109,78
 C 212,224,224

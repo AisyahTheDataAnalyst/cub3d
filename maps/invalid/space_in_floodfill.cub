@@ -1,10 +1,10 @@
-	  NO ./textures/north_wall.xpm
+	  NO ./textures/blue_wood/north_wall.xpm
 
 
-          EA ./textures/east_wall.xpm
+          EA ./textures/blue_wood/east_wall.xpm
 
-SO   ./textures/south_wall.xpm
-WE  	  ./textures/west_wall.xpm
+SO   ./textures/blue_wood/south_wall.xpm
+WE  	  ./textures/blue_wood/west_wall.xpm
 			F 150,15,1
 
     C 	   1,15,150

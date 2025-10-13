@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/12 19:58:06 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:29:23 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include "libft.h"
+# include "map_player.h"
 # include <stdbool.h> //bool
 # include <fcntl.h> // open
 # include <limits.h> // INT_MIN, INT_MAX
@@ -45,18 +46,12 @@
 
 typedef struct s_parse
 {
-	char	**map;				//malloc
 	char	*no_txt;			//malloc
 	char	*so_txt;			//malloc
 	char	*ea_txt;			//malloc
 	char	*we_txt;			//malloc
-	int		floor_colour;		
-	int		ceiling_colour;
-	char	player_direction;
 	int		map_height;
 	int		map_width;
-	int		player_y_pos;
-	int		player_x_pos;
 	bool	elements_status;
 	bool	invalid_identifier;
 	bool	not_empty_map;
@@ -72,27 +67,23 @@ typedef struct s_parse
 	int		width_start;
 	int		width_end;
 	int		map_fd;
-	int		so_txt_fd;
-	int		no_txt_fd;
-	int		we_txt_fd;
-	int		ea_txt_fd;
 	char	*map_filename;
 	char	*err_msg;
 }	t_parse;
 
 // parsing.c
-int		parsing(t_parse *parse, char **av);
-int		parse_elements(t_parse *parse, char *line);
-int		parse_map(t_parse *parse);
+int		parsing(t_parse *parse, t_player *player, t_map *map, char **av);
+int		parse_elements(t_parse *parse, t_map *map, char *line);
+int		parse_map(t_parse *parse, t_player *player, t_map *map);
 
 // textures.c
-bool	parse_north_texture(char *str, t_parse *parse);
-bool	parse_south_texture(char *str, t_parse *parse);
-bool	parse_west_texture(char *str, t_parse *parse);
-bool	parse_east_texture(char *str, t_parse *parse);
+bool	parse_north_texture(char *str, t_parse *parse, t_map *map);
+bool	parse_south_texture(char *str, t_parse *parse, t_map *map);
+bool	parse_west_texture(char *str, t_parse *parse, t_map *map);
+bool	parse_east_texture(char *str, t_parse *parse, t_map *map);
 
 // colours.c
-bool	parse_colour(char *str, t_parse *parse);
+bool	parse_colour(char *str, t_parse *parse, t_map *map);
 
 // search_map_details.c
 char	*search_map_details(t_parse *parse);
@@ -100,13 +91,17 @@ char	*search_map_details(t_parse *parse);
 // map_1.c
 bool	is_map_last_in_file(char *line, t_parse *parse);
 bool	map_has_valid_chars_only(t_parse *parse);
-void	save_map(t_parse *parse);
+void	save_map(t_parse *parse, t_map *map);
 
 // map_2.c
-bool	is_map_valid(t_parse *parse);
-void	map_replace_space_with_wall(t_parse *parse);
+bool	is_map_valid(t_parse *parse, t_player *player, t_map *map);
+void	map_replace_space_with_wall(t_map *map);
 // void	print_map(char **map)
 // void	print_dup_map(char **dup_map)
+
+// player.c
+bool	direction_plane(t_player *player);
+bool	is_player_valid(t_parse *parse, t_player *player, t_map *map);
 
 // utils_char.c
 bool	is_char_of_map(char c);
@@ -116,11 +111,10 @@ bool	skip_whitespace(char c);
 int		char_repitition(char *str, char c);
 
 // utils.c
-void	init_parsing(t_parse *parse, char **av);
+void	init_parsing(t_parse *parse, t_map *map, char **av);
 void	parse_err_msg(t_parse *parse, char *msg);
 void	free_array(char **str);
 bool	accurate_file_type(char *map_filename, char *file_extension);
 int		openable_file(char *map_filename, int fd);
-
 
 #endif

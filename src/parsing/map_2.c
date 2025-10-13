@@ -6,62 +6,33 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/12 19:56:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:28:14 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static bool	is_player_valid(t_parse *parse);
 static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col);
 
-bool	is_map_valid(t_parse *parse)
+bool	is_map_valid(t_parse *parse, t_player *player, t_map *map)
 {
 	char	**dup_map;
 	int		i;
 	bool	ff_status;
 
 	ff_status = false;
-	if (!is_player_valid(parse))
+	if (!is_player_valid(parse, player, map))
 		return (parse_err_msg(parse, INVALID_PLAYER), false);
 	i = -1;
 	dup_map = malloc(sizeof(char *) * (parse->map_height + 1));
-	while (parse->map[++i])
-		dup_map[i] = ft_strdup(parse->map[i]);
+	while (map->map[++i])
+		dup_map[i] = ft_strdup(map->map[i]);
 	dup_map[i] = NULL;
 	ff_status = flood_fill(parse,
-			dup_map, parse->player_y_pos, parse->player_x_pos);
+			dup_map, player->y_pos, player->x_pos);
 	if (!ff_status)
 		return (free_array(dup_map), parse_err_msg(parse, INVALID_MAP), false);
 	return (free_array(dup_map), true);
-}
-
-static bool	is_player_valid(t_parse *parse)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (parse->map[y])
-	{
-		x = 0;
-		while (parse->map[y][x])
-		{
-			if (parse->map[y][x] == 'N' || parse->map[y][x] == 'S'
-			|| parse->map[y][x] == 'W' || parse->map[y][x] == 'E')
-			{
-				parse->player_direction = parse->map[y][x];
-				parse->player_count++;
-				parse->player_y_pos = y;
-				parse->player_x_pos = x;
-			}
-			x++;
-		}
-		y++;
-	}
-	if (parse->player_count != 1)
-		return (parse_err_msg(parse, INVALID_PLAYER), false);
-	return (true);
 }
 
 static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
@@ -82,18 +53,18 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
 	return (true);
 }
 
-void	map_replace_space_with_wall(t_parse *parse)
+void	map_replace_space_with_wall(t_map *map)
 {
 	int	y;
 	int	x;
 
 	y = -1;
-	while (parse->map[++y])
+	while (map->map[++y])
 	{
 		x = -1;
-		while (parse->map[y][++x])
-			if (parse->map[y][x] == ' ')
-				parse->map[y][x] = '1';
+		while (map->map[y][++x])
+			if (map->map[y][x] == ' ')
+				map->map[y][x] = '1';
 	}
 }
 
