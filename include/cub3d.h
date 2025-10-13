@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:39 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:20:36 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:24:56 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 typedef struct s_game
 {
-	t_parse		*parse;
-	t_player	*player;
-	t_map		*map;
-	t_raycast	*raycast;
+	t_parse		parse;
+	t_player	player;
+	t_map		map;
+	t_raycast	raycast;
 }				t_game;
 
 void	all_cleanup(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:26:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 14:33:51 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:26:00 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	all_cleanup(t_game *game)
 {
 	// raycasting_cleanup();
-	parsing_cleanup(game->parse, game->map);
+	parsing_cleanup(&game->parse, &game->map);
 }
 
 void	parsing_cleanup(t_parse *parse, t_map *map)
