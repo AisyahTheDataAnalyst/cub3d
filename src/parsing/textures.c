@@ -6,13 +6,13 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:18:51 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/10 15:48:40 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:07:17 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool	parse_north_texture(char *str, t_parse *parse)
+bool	parse_north_texture(char *str, t_parse *parse, t_map *map)
 {
 	int		i;
 	char	*raw_texture;
@@ -25,13 +25,13 @@ bool	parse_north_texture(char *str, t_parse *parse)
 	parse->no_txt = raw_texture;
 	if (!accurate_file_type(parse->no_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_NO), false);
-	parse->no_txt_fd = openable_file(parse->no_txt, parse->no_txt_fd);
-	if (parse->no_txt_fd == -1)
+	map->no_txt_fd = openable_file(parse->no_txt, map->no_txt_fd);
+	if (map->no_txt_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_TXT_FILE), false);
 	return (true);
 }
 
-bool	parse_south_texture(char *str, t_parse *parse)
+bool	parse_south_texture(char *str, t_parse *parse, t_map *map)
 {
 	int		i;
 	char	*raw_texture;
@@ -44,13 +44,13 @@ bool	parse_south_texture(char *str, t_parse *parse)
 	parse->so_txt = raw_texture;
 	if (!accurate_file_type(parse->so_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_SO), false);
-	parse->so_txt_fd = openable_file(parse->so_txt, parse->ea_txt_fd);
-	if (parse->so_txt_fd == -1)
+	map->so_txt_fd = openable_file(parse->so_txt, map->ea_txt_fd);
+	if (map->so_txt_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_TXT_FILE), false);
 	return (true);
 }
 
-bool	parse_west_texture(char *str, t_parse *parse)
+bool	parse_west_texture(char *str, t_parse *parse, t_map *map)
 {
 	int		i;
 	char	*raw_texture;
@@ -63,13 +63,13 @@ bool	parse_west_texture(char *str, t_parse *parse)
 	parse->we_txt = raw_texture;
 	if (!accurate_file_type(parse->we_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_WE), false);
-	parse->we_txt_fd = openable_file(parse->we_txt, parse->we_txt_fd);
-	if (parse->we_txt_fd == -1)
+	map->we_txt_fd = openable_file(parse->we_txt, map->we_txt_fd);
+	if (map->we_txt_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_TXT_FILE), false);
 	return (true);
 }
 
-bool	parse_east_texture(char *str, t_parse *parse)
+bool	parse_east_texture(char *str, t_parse *parse, t_map *map)
 {
 	int		i;
 	char	*raw_texture;
@@ -82,8 +82,8 @@ bool	parse_east_texture(char *str, t_parse *parse)
 	parse->ea_txt = raw_texture;
 	if (!accurate_file_type(parse->ea_txt, ".xpm"))
 		return (parse_err_msg(parse, NOT_XPM_FILE_EA), false);
-	parse->ea_txt_fd = openable_file(parse->ea_txt, parse->ea_txt_fd);
-	if (parse->ea_txt_fd == -1)
+	map->ea_txt_fd = openable_file(parse->ea_txt, map->ea_txt_fd);
+	if (map->ea_txt_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_TXT_FILE), false);
 	return (true);
 }

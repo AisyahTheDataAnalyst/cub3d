@@ -6,11 +6,26 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/10 15:22:04 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:25:11 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	init_parsing(t_parse *parse, t_map *map, char **av)
+{
+	parse->map_filename = av[1];
+	parse->height_start = INT_MAX;
+	parse->height_end = -1;
+	parse->width_start = INT_MAX;
+	parse->width_end = -1;
+	parse->map_fd = -1;
+	map->so_txt_fd = -1;
+	map->no_txt_fd = -1;
+	map->we_txt_fd = -1;
+	map->ea_txt_fd = -1;
+	parse->elements_status = true;
+}
 
 	// printf("err_msg: %s\n", msg);
 void	parse_err_msg(t_parse *parse, char *msg)
@@ -46,29 +61,4 @@ int	openable_file(char *map_filename, int fd)
 {
 	fd = open(map_filename, O_RDONLY);
 	return (fd);
-}
-
-void	parsing_cleanup(t_parse *parse)
-{
-	if (parse->so_txt)
-		free(parse->so_txt);
-	if (parse->no_txt)
-		free(parse->no_txt);
-	if (parse->we_txt)
-		free(parse->we_txt);
-	if (parse->ea_txt)
-		free(parse->ea_txt);
-	if (parse->map)
-		free_array(parse->map);
-	if (parse->so_txt_fd > 3)
-		close(parse->so_txt_fd);
-	if (parse->no_txt_fd > 3)
-		close(parse->no_txt_fd);
-	if (parse->we_txt_fd > 3)
-		close(parse->we_txt_fd);
-	if (parse->ea_txt_fd > 3)
-		close(parse->ea_txt_fd);
-	if (parse->map_fd > 3)
-		close(parse->map_fd);
-	get_next_line(-2);
 }

@@ -1,11 +1,11 @@
-	  NOt ./textures/north_wall.xpm
+	  NOt ./textures/blue_wood/north_wall.xpm
 
 
-          EAt ./textures/east_wall.xpm
+          EAt ./textures/blue_wood/east_wall.xpm
 
 
-SOt   ./textures/south_wall.xpm
-WEt  	  ./textures/west_wall.xpm
+SOt   ./textures/blue_wood/south_wall.xpm
+WEt  	  ./textures/blue_wood/west_wall.xpm
 			Ft 150,15,1
 
     Ct 	   1,15,150

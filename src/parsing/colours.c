@@ -6,17 +6,17 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/09 18:35:35 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:22:49 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 static bool	filter_raw_colour(char *raw_colour, t_parse *parse);
-static bool	save_colour(t_parse *parse, int colour_mode, int *rgb);
+static bool	save_colour(t_parse *parse, t_map *map, int colour_mode, int *rgb);
 static bool	have_space_between_numbers(char *colour);
 
-bool	parse_colour(char *str, t_parse *parse)
+bool	parse_colour(char *str, t_parse *parse, t_map *map)
 {
 	int		i;
 	char	*raw_colour;
@@ -41,7 +41,7 @@ bool	parse_colour(char *str, t_parse *parse)
 		if (temp)
 			temp++;
 	}
-	return (free(raw_colour), save_colour(parse, colour_mode, rgb));
+	return (free(raw_colour), save_colour(parse, map, colour_mode, rgb));
 }
 
 static bool	filter_raw_colour(char *raw_colour, t_parse *parse)
@@ -95,7 +95,7 @@ static bool	have_space_between_numbers(char *colour)
 // valid	:	999           ,            9        ,        9
 // invalid	:	99    9       ,            9        ,        9        9
 
-static bool	save_colour(t_parse *parse, int colour_mode, int *rgb)
+static bool	save_colour(t_parse *parse, t_map *map, int colour_mode, int *rgb)
 {
 	int	r;
 	int	g;
@@ -108,12 +108,12 @@ static bool	save_colour(t_parse *parse, int colour_mode, int *rgb)
 		return (free(rgb), parse_err_msg(parse, INVALID_COLOUR), false);
 	if (colour_mode == FLOOR)
 	{
-		parse->floor_colour = (r < 16 | g < 8 | b);
+		map->floor_colour = (r < 16 | g < 8 | b);
 		parse->floor_count++;
 	}
 	else if (colour_mode == CEILING)
 	{
-		parse->ceiling_colour = (r < 16 | g < 8 | b);
+		map->ceiling_colour = (r < 16 | g < 8 | b);
 		parse->ceiling_count++;
 	}
 	if (parse->floor_count > 1)

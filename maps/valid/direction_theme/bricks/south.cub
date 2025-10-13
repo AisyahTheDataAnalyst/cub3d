@@ -1,7 +1,7 @@
-NO ./textures/north_wall.xpm
-SO ./textures/south_wall.xpm
-WE ./textures/west_wall.xpm
-EA ./textures/east_wall.xpm
+NO ./textures/bricks/north_wall.xpm
+SO ./textures/bricks/south_wall.xpm
+WE ./textures/bricks/west_wall.xpm
+EA ./textures/bricks/east_wall.xpm
 
 F 64,109,78
 C 212,224,224
@@ -19,7 +19,7 @@ C 212,224,224
 111111101111
 100100000001
 100100000001
-1000000N0001
+1000000S0001
 10010000000111
 10010000000001
 11111111111111
