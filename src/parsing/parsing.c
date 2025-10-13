@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:26:53 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
 {
 	char	*line;
 
-	init_parsing(parse, map, av);
+	init_parsing(parse, av);
 	if (!accurate_file_type(parse->map_filename, ".cub"))
 		return (parse_err_msg(parse, NOT_CUB_FILE), ft_putendl_fd("Error", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
-	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE),
 			ft_putendl_fd("Error", 2), ft_putendl_fd(parse->err_msg, 2), 1);
@@ -128,7 +128,7 @@ int	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
 
-	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
 	line = search_map_details(parse);
@@ -143,7 +143,7 @@ int	parse_map(t_parse *parse, t_player *player, t_map *map)
 		return (parse_err_msg(parse, INVALID_MAP), 0);
 	if (!map_has_valid_chars_only(parse))
 		return (0);
-	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
 	save_map(parse, map);
