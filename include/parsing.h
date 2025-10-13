@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:29:23 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@
 
 typedef struct s_parse
 {
-	char	*no_txt;			//malloc
-	char	*so_txt;			//malloc
-	char	*ea_txt;			//malloc
-	char	*we_txt;			//malloc
+	int		so_txt_fd;
+	int		no_txt_fd;
+	int		we_txt_fd;
+	int		ea_txt_fd;
 	int		map_height;
 	int		map_width;
 	bool	elements_status;
@@ -111,10 +111,10 @@ bool	skip_whitespace(char c);
 int		char_repitition(char *str, char c);
 
 // utils.c
-void	init_parsing(t_parse *parse, t_map *map, char **av);
+void	init_parsing(t_parse *parse, char **av);
 void	parse_err_msg(t_parse *parse, char *msg);
 void	free_array(char **str);
 bool	accurate_file_type(char *map_filename, char *file_extension);
-int		openable_file(char *map_filename, int fd);
+int		readable_file(char *map_filename, int fd);
 
 #endif

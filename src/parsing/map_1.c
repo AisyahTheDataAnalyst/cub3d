@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:17:03 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	map_has_valid_chars_only(t_parse *parse)
 	int		i;
 	char	*line;
 
-	parse->map_fd = openable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
 	if (parse->map_fd == -1)
 		return (parse_err_msg(parse, UNOPEN_MAP_FILE), false);
 	i = 0;

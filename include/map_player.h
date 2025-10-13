@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:29:12 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:37:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:41:36 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct s_player
 typedef struct s_map
 {
 	char	**map;				//malloc
-	int		so_txt_fd;
-	int		no_txt_fd;
-	int		we_txt_fd;
-	int		ea_txt_fd;
+	char	*no_txt;			//malloc
+	char	*so_txt;			//malloc
+	char	*we_txt;			//malloc
+	char	*ea_txt;			//malloc
 	int		floor_colour;		
 	int		ceiling_colour;
 }				t_map;
