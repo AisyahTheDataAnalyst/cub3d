@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_parsing(t_parse *parse, char **av)
 }
 
 	// printf("err_msg: %s\n", msg);
-void	parse_err_msg(t_parse *parse, char *msg)
+void	err_msg(t_parse *parse, char *msg)
 {
 	if (!parse->err_msg)
 		parse->err_msg = msg;
@@ -57,8 +57,7 @@ bool	accurate_file_type(char *map_filename, char *file_extension)
 	return (true);
 }
 
-int	readable_file(char *map_filename, int fd)
+bool	is_space(char c)
 {
-	fd = open(map_filename, O_RDONLY);
-	return (fd);
+	return (c == ' ');
 }

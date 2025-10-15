@@ -131,12 +131,7 @@ fdleaks:
 	valgrind --track-fds=yes ./$(NAME) $(ARG)
 #example way of writing in terminal : ARG=maps/valid/.cub 
 
-
-# fsan:
-# 	$(CFLAGS) -fsanitize=address
-
 .PHONY: bonus all clean fclean re norm valgrind fdleaks fsan
-
 
 # -I(include directory) - Tells the compiler to look for header files
 # -L(directory) - Tells the compiler to look for .a library path in this folder

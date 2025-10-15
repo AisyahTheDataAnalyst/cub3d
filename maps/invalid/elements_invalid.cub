@@ -5,10 +5,10 @@
 
 
 SOt   ./textures/blue_wood/south_wall.xpm
-WEt  	  ./textures/blue_wood/west_wall.xpm
+WEt    ./textures/blue_wood/west_wall.xpm
 			Ft 150,15,1
 
-    Ct 	   1,15,150
+    Ct    1,15,150
 11111 11111
 10001 10000
 100N1 10000

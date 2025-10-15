@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 13:37:02 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ bool	is_player_valid(t_parse *parse, t_player *player, t_map *map)
 		y++;
 	}
 	if (parse->player_count != 1)
-		return (parse_err_msg(parse, INVALID_PLAYER), false);
+		return (err_msg(parse, INVALID_PLAYER), false);
 	return (true);
 }
