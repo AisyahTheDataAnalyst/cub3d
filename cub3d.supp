@@ -1,0 +1,39 @@
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
+    fun:mlx_mouse_hide
+}
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
+    fun:XrmGetStringDatabase
+	...
+}
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
+    fun:_dl_new_object
+	...
+}
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
+    fun:_XlcCreateLocaleDataBase
+	...
+}
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
+    fun:_dl_catch_exception
+	...
+}

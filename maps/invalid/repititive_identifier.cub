@@ -1,10 +1,10 @@
 NO NO NO ./textures/blue_wood/north_wall.xpm
 EAEAEAEA ./textures/blue_wood/east_wall.xpm
-WEWE WE WE 	  ./textures/blue_wood/west_wall.xpm
+WEWE WE WE  ./textures/blue_wood/west_wall.xpm
 SO SOSOSO  ./textures/blue_wood/south_wall.xpm
 
 F 150,15,1
-C 	   1,15,150
+C    1,15,150
 
 
 1111111111111111111111111111111111

@@ -1,0 +1,25 @@
+NO ./textures/testing/north_wall.xpm
+SO ./textures/testing/south_wall.xpm
+WE ./textures/testing/west_wall.xpm
+EA ./textures/testing/east_wall.xpm
+
+F 64,109,78
+C 212,224,224
+
+
+  11111111111
+  10000000001
+  10111111101
+  101     101
+  101     101
+  10111111101
+  10000000001
+  11111011111
+      101        
+111111101111
+100100000001
+100100000001
+1000000N0001
+10010000000111
+10010000000001
+11111111111111

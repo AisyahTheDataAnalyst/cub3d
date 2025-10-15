@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define UNOPEN_TXT_FILE "Failed to open texture file"
 # define INVALID_IDENTIFIER "Map file exists invalid identifier"
 # define EMPTY_MAP "Map file is empty"
+# define INVALID_WHITESPACE "Not spaces only between info and element or no info"
 
 # define FLOOR 0
 # define CEILING 1
@@ -61,6 +62,8 @@ typedef struct s_parse
 	int		ea_txt_count;	
 	int		floor_count;
 	int		ceiling_count;
+	int		*rgb;
+	int		colour_mode;
 	int		player_count;
 	int		height_start;
 	int		height_end;
@@ -112,9 +115,9 @@ int		char_repitition(char *str, char c);
 
 // utils.c
 void	init_parsing(t_parse *parse, char **av);
-void	parse_err_msg(t_parse *parse, char *msg);
+void	err_msg(t_parse *parse, char *msg);
 void	free_array(char **str);
 bool	accurate_file_type(char *map_filename, char *file_extension);
-int		readable_file(char *map_filename, int fd);
+bool	is_space(char c);
 
 #endif

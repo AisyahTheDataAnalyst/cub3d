@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 14:44:24 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
 
 	init_parsing(parse, av);
 	if (!accurate_file_type(parse->map_filename, ".cub"))
-		return (parse_err_msg(parse, NOT_CUB_FILE), ft_putendl_fd("Error", 2),
+		return (err_msg(parse, NOT_CUB_FILE), ft_putendl_fd("Error", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
-	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
-		return (parse_err_msg(parse, UNOPEN_MAP_FILE),
+		return (err_msg(parse, UNOPEN_MAP_FILE),
 			ft_putendl_fd("Error", 2), ft_putendl_fd(parse->err_msg, 2), 1);
 	line = get_next_line(parse->map_fd);
 	if (!parse_elements(parse, map, line))
@@ -48,17 +48,17 @@ int	parse_elements(t_parse *parse, t_map *map, char *line)
 		i = 0;
 		while (line[i] && skip_whitespace(line[i]))
 			i++;
-		if (!ft_strncmp(&line[i], "NO", 2) && skip_whitespace(line[i + 2]))
+		if (!ft_strncmp(&line[i], "NO", 2) && is_space(line[i + 2]))
 			parse->elements_status = parse_north_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "SO", 2) && skip_whitespace(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "SO", 2) && is_space(line[i + 2]))
 			parse->elements_status = parse_south_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "WE", 2) && skip_whitespace(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "WE", 2) && is_space(line[i + 2]))
 			parse->elements_status = parse_west_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "EA", 2) && skip_whitespace(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "EA", 2) && is_space(line[i + 2]))
 			parse->elements_status = parse_east_texture(&line[i], parse, map);
 		else if ((!ft_strncmp(&line[i], "F", 1)
 				|| !ft_strncmp(&line[i], "C", 1))
-			&& skip_whitespace(line[i + 1]))
+			&& is_space(line[i + 1]))
 			parse->elements_status = parse_colour(&line[i], parse, map);
 		else
 			parse->elements_status = other_edge_cases_elements(&line[i], parse);
@@ -95,26 +95,26 @@ static bool	got_all_elements(t_parse *parse, char *line)
 		free (line);
 	close(parse->map_fd);
 	if (!parse->not_empty_map)
-		return (parse_err_msg(parse, EMPTY_MAP), false);
+		return (err_msg(parse, EMPTY_MAP), false);
 	if (parse->invalid_identifier)
-		return (parse_err_msg(parse, INVALID_IDENTIFIER), false);
+		return (err_msg(parse, INVALID_IDENTIFIER), false);
 	if (parse->elements_status
 		&& parse->no_txt_count == 1 && parse->so_txt_count == 1
 		&& parse->we_txt_count == 1 && parse->ea_txt_count == 1
 		&& parse->floor_count == 1 && parse->ceiling_count == 1)
 		return (true);
 	if (parse->no_txt_count != 1)
-		return (parse_err_msg(parse, INVALID_NO_COUNT), false);
+		return (err_msg(parse, INVALID_NO_COUNT), false);
 	if (parse->so_txt_count != 1)
-		return (parse_err_msg(parse, INVALID_SO_COUNT), false);
+		return (err_msg(parse, INVALID_SO_COUNT), false);
 	if (parse->we_txt_count != 1)
-		return (parse_err_msg(parse, INVALID_WE_COUNT), false);
+		return (err_msg(parse, INVALID_WE_COUNT), false);
 	if (parse->ea_txt_count != 1)
-		return (parse_err_msg(parse, INVALID_EA_COUNT), false);
+		return (err_msg(parse, INVALID_EA_COUNT), false);
 	if (parse->floor_count != 1)
-		return (parse_err_msg(parse, INVALID_FLOOR_COUNT), false);
+		return (err_msg(parse, INVALID_FLOOR_COUNT), false);
 	if (parse->ceiling_count != 1)
-		return (parse_err_msg(parse, INVALID_CEILING_COUNT), false);
+		return (err_msg(parse, INVALID_CEILING_COUNT), false);
 	return (true);
 }
 
@@ -128,24 +128,24 @@ int	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
 
-	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
-		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
+		return (err_msg(parse, UNOPEN_MAP_FILE), 0);
 	line = search_map_details(parse);
 	if (!is_map_last_in_file(line, parse))
-		return (parse_err_msg(parse, MAP_IS_NOT_LAST), 0);
-	if ((parse->height_start < 7 && parse->height_start != INT_MAX)
+		return (err_msg(parse, MAP_IS_NOT_LAST), 0);
+	if ((parse->height_start < 7 || parse->height_start == INT_MAX)
 		|| parse->height_end < 9)
-		return (parse_err_msg(parse, INVALID_MAP), 0);
+		return (err_msg(parse, INVALID_MAP), 0);
 	parse->map_height = parse->height_end - parse->height_start + 1;
 	parse->map_width = parse->width_end - parse->width_start + 1;
 	if (parse->map_height < 3 || parse->map_width < 3)
-		return (parse_err_msg(parse, INVALID_MAP), 0);
+		return (err_msg(parse, INVALID_MAP), 0);
 	if (!map_has_valid_chars_only(parse))
 		return (0);
-	parse->map_fd = readable_file(parse->map_filename, parse->map_fd);
+	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
-		return (parse_err_msg(parse, UNOPEN_MAP_FILE), 0);
+		return (err_msg(parse, UNOPEN_MAP_FILE), 0);
 	save_map(parse, map);
 	if (!is_map_valid(parse, player, map))
 		return (0);

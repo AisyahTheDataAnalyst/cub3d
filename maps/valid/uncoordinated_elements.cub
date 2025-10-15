@@ -1,5 +1,5 @@
 NO ./textures/blue_wood/north_wall.xpm
-C 	   1,15,150
+C    1,15,150
 
 EA ./textures/blue_wood/east_wall.xpm
 
@@ -7,8 +7,8 @@ SO   ./textures/blue_wood/south_wall.xpm
 
 F 150,15,1
 
-WE  	  ./textures/blue_wood/west_wall.xpm
-			
+WE    ./textures/blue_wood/west_wall.xpm
+
 
   
 11111
