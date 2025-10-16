@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 09:57:09 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:10:00 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define INVALID_WE_COUNT "Invalid number of west element"
 # define INVALID_FLOOR_COUNT "Invalid number of floor element"
 # define INVALID_CEILING_COUNT "Invalid number of ceiling element"
-# define INVALID_PLAYER "Invalid number of player"
+# define INVALID_PLAYER_COUNT "Invalid number of player"
 # define INVALID_COLOUR "Invalid colour"
 # define NOT_XPM_FILE_NO "Not a .xpm type of file for north texture"
 # define NOT_XPM_FILE_SO "Not a .xpm type of file for south texture"
@@ -40,7 +40,7 @@
 # define UNOPEN_TXT_FILE "Failed to open texture file"
 # define INVALID_IDENTIFIER "Map file exists invalid identifier"
 # define EMPTY_MAP "Map file is empty"
-# define INVALID_WHITESPACE "Not spaces only between info and element or no info"
+# define NOT_SPACE "Not spaces only between info and element or no info"
 
 # define FLOOR 0
 # define CEILING 1

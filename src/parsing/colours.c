@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:10:00 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	parse_colour(char *str, t_parse *parse, t_map *map)
 	while (++i && is_space(str[i]))
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
-		return (err_msg(parse, INVALID_WHITESPACE), false);
+		return (err_msg(parse, NOT_SPACE), false);
 	raw_colour = ft_strtrim(&str[i], " \t\n");
 	if (!filter_raw_colour(raw_colour, parse))
 		return (free(raw_colour), false);

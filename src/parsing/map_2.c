@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 10:20:47 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:01:41 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_map_valid(t_parse *parse, t_player *player, t_map *map)
 
 	ff_status = false;
 	if (!is_player_valid(parse, player, map))
-		return (err_msg(parse, INVALID_PLAYER), false);
+		return (err_msg(parse, INVALID_PLAYER_COUNT), false);
 	i = -1;
 	dup_map = malloc(sizeof(char *) * (parse->map_height + 1));
 	while (map->map[++i])
