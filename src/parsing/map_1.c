@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:05:12 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ static char	*substring_into_map(char *line, t_parse *parse)
 // 	int	y;
 // 	int	x;
 
-// 	parse->err_msg = INVALID_MAP;
 // 	y = -1;
 // 	while (parse->map[y++])
 // 	{

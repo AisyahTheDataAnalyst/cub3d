@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 09:56:57 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:58:06 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,16 @@ int	parse_elements(t_parse *parse, t_map *map, char *line)
 		i = 0;
 		while (line[i] && skip_whitespace(line[i]))
 			i++;
-		if (!ft_strncmp(&line[i], "NO", 2) && is_space(line[i + 2]))
+		if (!ft_strncmp(&line[i], "NO ", 3))
 			parse->elements_status = parse_north_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "SO", 2) && is_space(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "SO ", 3))
 			parse->elements_status = parse_south_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "WE", 2) && is_space(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "WE ", 3))
 			parse->elements_status = parse_west_texture(&line[i], parse, map);
-		else if (!ft_strncmp(&line[i], "EA", 2) && is_space(line[i + 2]))
+		else if (!ft_strncmp(&line[i], "EA ", 3))
 			parse->elements_status = parse_east_texture(&line[i], parse, map);
-		else if ((!ft_strncmp(&line[i], "F", 1)
-				|| !ft_strncmp(&line[i], "C", 1))
-			&& is_space(line[i + 1]))
+		else if ((!ft_strncmp(&line[i], "F ", 2)
+				|| !ft_strncmp(&line[i], "C ", 2)))
 			parse->elements_status = parse_colour(&line[i], parse, map);
 		else
 			parse->elements_status = other_edge_cases_elements(&line[i], parse);
@@ -103,19 +102,7 @@ static bool	got_all_elements(t_parse *parse, char *line)
 		&& parse->we_txt_count == 1 && parse->ea_txt_count == 1
 		&& parse->floor_count == 1 && parse->ceiling_count == 1)
 		return (true);
-	if (parse->no_txt_count != 1)
-		return (err_msg(parse, INVALID_NO_COUNT), false);
-	if (parse->so_txt_count != 1)
-		return (err_msg(parse, INVALID_SO_COUNT), false);
-	if (parse->we_txt_count != 1)
-		return (err_msg(parse, INVALID_WE_COUNT), false);
-	if (parse->ea_txt_count != 1)
-		return (err_msg(parse, INVALID_EA_COUNT), false);
-	if (parse->floor_count != 1)
-		return (err_msg(parse, INVALID_FLOOR_COUNT), false);
-	if (parse->ceiling_count != 1)
-		return (err_msg(parse, INVALID_CEILING_COUNT), false);
-	return (true);
+	return (false);
 }
 
 	// printf("height_s: %d height_e: %d\n", 
