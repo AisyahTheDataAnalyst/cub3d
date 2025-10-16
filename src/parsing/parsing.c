@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 09:56:57 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
 	if (!parse_map(parse, player, map))
 		return (ft_putstr_fd("Error\nMap is not properly structured: ", 2),
 			ft_putendl_fd(parse->err_msg, 2), 1);
-	if (!direction_plane(player))
+	if (!parse_player(player, map))
 		return (ft_putendl_fd("Error\nView is not properly structured", 2), 1);
 	return (0);
 }

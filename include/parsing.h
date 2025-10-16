@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 09:57:09 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	map_replace_space_with_wall(t_map *map);
 // void	print_dup_map(char **dup_map)
 
 // player.c
-bool	direction_plane(t_player *player);
+bool	parse_player(t_player *player, t_map *map);
 bool	is_player_valid(t_parse *parse, t_player *player, t_map *map);
 
 // utils_char.c

@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 10:02:01 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 static bool	direction_allocation(t_player *player);
 static bool	plane_allocation(t_player *player);
+static void	adjust_player_pos(t_player *player, t_map *map);
 
-bool	direction_plane(t_player *player)
+bool	parse_player(t_player *player, t_map *map)
 {
 	if (!direction_allocation(player))
 		return (false);
 	if (!plane_allocation(player))
 		return (false);
+	adjust_player_pos(player, map);
 	return (true);
 }
 
@@ -80,6 +82,13 @@ static bool	plane_allocation(t_player *player)
 		return (true);
 	}
 	return (false);
+}
+
+static void	adjust_player_pos(t_player *player, t_map *map)
+{
+	map->map[player->y_pos][player->x_pos] = '0';
+	player->y_pos += 0.5;
+	player->x_pos += 0.5;
 }
 
 bool	is_player_valid(t_parse *parse, t_player *player, t_map *map)

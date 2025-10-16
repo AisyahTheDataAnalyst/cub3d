@@ -6,14 +6,17 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 14:04:21 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/16 10:20:47 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col);
+// static void	print_dup_map(char **dup_map);
+// static void	print_map(t_map *map);
 
+	// print_dup_map(dup_map);
 bool	is_map_valid(t_parse *parse, t_player *player, t_map *map)
 {
 	char	**dup_map;
@@ -53,6 +56,7 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
 	return (true);
 }
 
+	// print_map(map);
 void	map_replace_space_with_wall(t_map *map)
 {
 	int	y;
@@ -68,39 +72,34 @@ void	map_replace_space_with_wall(t_map *map)
 	}
 }
 
-// void	print_map(char **map)
+// static void	print_map(t_map *map)
 // {
 // 	int	i;
-// 	int	j;
 
 // 	i = 0;
-// 	if (!map[i])
+// 	if (!map->map[i])
 // 		return (ft_putstr_fd("map is null!\n", 2));
-// 	while (map[i])
+// 	printf("\n2d-array map:\n");
+// 	while (map->map[i])
 // 	{
-// 		j = -1;
-// 		while (map[i][++j] && map[i][j] != '\n')
-// 			printf("%c", map[i][j]);
-// 		printf("\n");
+// 		ft_putendl_fd(map->map[i], 1);
 // 		i++;
 // 	}
+// 	printf("\n");
 // }
 
-// void	print_dup_map(char **dup_map)
+// static void	print_dup_map(char **dup_map)
 // {
 // 	int	i;
-// 	int	j;
 
 // 	i = 0;
 // 	if (!dup_map[i])
 // 		return (ft_putstr_fd("dup_map is null!\n", 2));
-// 	printf("\nflooded:\n");
+// 	printf("\nmap is flooded:\n");
 // 	while (dup_map[i])
 // 	{
-// 		j = -1;
-// 		while (dup_map[i][++j] && dup_map[i][j] != '\n')
-// 			printf("%c", dup_map[i][j]);
-// 		printf("\n");
+// 		ft_putendl_fd(dup_map[i], 1);
 // 		i++;
 // 	}
+// 	printf("\n");
 // }
