@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:39 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 15:24:56 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/19 22:02:42 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ typedef struct s_game
 
 void	all_cleanup(t_game *game);
 void	parsing_cleanup(t_parse *parse, t_map *map);
+void	raycasting(t_player *player, t_map *map, t_raycast *raycast);
 
 #endif
