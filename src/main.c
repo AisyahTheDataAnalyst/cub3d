@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: ysheraun <ysheraun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/19 22:12:36 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:35:59 by ysheraun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,15 @@ int	destroy_window(t_game *game)
 	mlx_destroy_window(game->raycast.mlx_connection, game->raycast.mlx_window);
 	mlx_destroy_display(game->raycast.mlx_connection);
 	free(game->raycast.mlx_connection);
+	all_cleanup(game);
 	exit(EXIT_SUCCESS);
+}
+
+int	handle_input(int keycode, t_game *game)
+{
+	if (keycode == 65307)
+		destroy_window(game);
+	return (EXIT_SUCCESS);
 }
 
 	// print_last_look_map(&game.map);
@@ -35,6 +43,7 @@ int	main(int ac, char **av)
 		return (parsing_cleanup(&game.parse, &game.map), 1);
 	ft_putendl_fd("Success parsing!", 1);
 	raycasting(&game.player, &game.map, &game.raycast);
+	mlx_hook(game.raycast.mlx_window, 2, 1L << 0, handle_input, &game);
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);
 	mlx_loop(game.raycast.mlx_connection);
 	all_cleanup(&game);
