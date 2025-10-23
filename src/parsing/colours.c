@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colours.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: ysheraun <ysheraun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 13:10:00 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:19:57 by ysheraun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ static bool	save_colour(t_parse *parse, t_map *map)
 		return (free(parse->rgb), err_msg(parse, INVALID_COLOUR), false);
 	if (parse->colour_mode == FLOOR)
 	{
-		map->floor_colour = (r < 16 | g < 8 | b);
+		map->floor_colour = (r << 16 | g << 8 | b);
 		parse->floor_count++;
 	}
 	else if (parse->colour_mode == CEILING)
 	{
-		map->ceiling_colour = (r < 16 | g < 8 | b);
+		map->ceiling_colour = (r << 16 | g << 8 | b);
 		parse->ceiling_count++;
 	}
 	parse->colour_mode = 0;
