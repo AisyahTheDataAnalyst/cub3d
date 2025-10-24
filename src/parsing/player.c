@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/24 19:59:03 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/10/24 22:51:45 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static bool	plane_allocation(t_player *player)
 
 static void	adjust_player_pos(t_player *player, t_map *map)
 {
-	map->map[player->y_pos][player->x_pos] = '0';
+	map->map[(int)player->y_pos][(int)player->x_pos] = '0';
 	player->y_pos += 0.5;
 	player->x_pos += 0.5;
 }
