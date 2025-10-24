@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 12:59:30 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:59:03 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,29 @@ bool	parse_player(t_player *player, t_map *map)
 
 static bool	direction_allocation(t_player *player)
 {
+	// Might need to change dir y
 	if (player->player_direction == 'N')
 	{
-		player->dir_x = +1;
-		player->dir_y = 0;
+		player->dir_x = 0;
+		player->dir_y = 1;
 		return (true);
 	}
 	else if (player->player_direction == 'S')
-	{
-		player->dir_x = -1;
-		player->dir_y = 0;
-		return (true);
-	}
-	else if (player->player_direction == 'W')
 	{
 		player->dir_x = 0;
 		player->dir_y = -1;
 		return (true);
 	}
+	else if (player->player_direction == 'W')
+	{
+		player->dir_x = -1;
+		player->dir_y = 0;
+		return (true);
+	}
 	else if (player->player_direction == 'E')
 	{
-		player->dir_x = 0;
-		player->dir_y = +1;
+		player->dir_x = +1;
+		player->dir_y = 0;
 		return (true);
 	}
 	return (false);
@@ -59,26 +60,26 @@ static bool	plane_allocation(t_player *player)
 {
 	if (player->player_direction == 'N')
 	{
-		player->plane_x = +0.66;
-		player->plane_y = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
 		return (true);
 	}
 	else if (player->player_direction == 'S')
-	{
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-		return (true);
-	}
-	else if (player->player_direction == 'W')
 	{
 		player->plane_x = 0;
 		player->plane_y = -0.66;
 		return (true);
 	}
+	else if (player->player_direction == 'W')
+	{
+		player->plane_x = -0.66;
+		player->plane_y = 0;
+		return (true);
+	}
 	else if (player->player_direction == 'E')
 	{
-		player->plane_x = 0;
-		player->plane_y = +0.66;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
 		return (true);
 	}
 	return (false);
