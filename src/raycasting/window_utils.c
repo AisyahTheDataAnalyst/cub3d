@@ -6,14 +6,11 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:52:57 by yosherau          #+#    #+#             */
-/*   Updated: 2025/10/19 21:59:35 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/10/24 17:21:43 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycasting.h"
-
-# define WINDOW_WIDTH 854
-# define WINDOW_HEIGHT 480
 
 void	create_window(t_raycast *raycast)
 {
