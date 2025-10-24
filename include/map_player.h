@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_player.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:29:12 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 14:41:36 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/10/24 22:50:59 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 typedef struct s_player
 {
 	char	player_direction;
-	int		y_pos;
-	int		x_pos;
+	double		y_pos;
+	double		x_pos;
 	int		dir_x;
 	int		dir_y;
 	double	plane_x;
@@ -31,7 +31,7 @@ typedef struct s_map
 	char	*so_txt;			//malloc
 	char	*we_txt;			//malloc
 	char	*ea_txt;			//malloc
-	int		floor_colour;		
+	int		floor_colour;
 	int		ceiling_colour;
 }				t_map;
 
