@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysheraun <ysheraun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/22 15:35:59 by ysheraun         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:49:26 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ int	main(int ac, char **av)
 	if (parsing(&game.parse, &game.player, &game.map, av) == 1)
 		return (parsing_cleanup(&game.parse, &game.map), 1);
 	ft_putendl_fd("Success parsing!", 1);
-	raycasting(&game.player, &game.map, &game.raycast);
+	create_window(&game.raycast);
+	game.raycast.data.img = mlx_new_image(game.raycast.mlx_connection, WINDOW_WIDTH, WINDOW_HEIGHT);
+	game.raycast.data.addr = mlx_get_data_addr(game.raycast.data.img, &game.raycast.data.bits_per_pixel,
+		&game.raycast.data.line_length, &game.raycast.data.endian);
 	mlx_hook(game.raycast.mlx_window, 2, 1L << 0, handle_input, &game);
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);
+	mlx_loop_hook(game.raycast.mlx_connection, &raycasting, &game);
 	mlx_loop(game.raycast.mlx_connection);
 	all_cleanup(&game);
 	return (0);
