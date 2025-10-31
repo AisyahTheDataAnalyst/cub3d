@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:39 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/19 22:02:42 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:41:15 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct s_game
 
 void	all_cleanup(t_game *game);
 void	parsing_cleanup(t_parse *parse, t_map *map);
-void	raycasting(t_player *player, t_map *map, t_raycast *raycast);
+int		raycasting(t_game *game);
 
 #endif
