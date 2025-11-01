@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/10/31 15:18:37 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:42:55 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	raycasting(t_game *game)
 				mapY += stepY;
 				side = 1;
 			}
-			if (game->map.map[mapX][mapY] == 49)
+			if (game->map.map[mapY][mapX] == 49)
 				hit = 1;
 		}
 		if (side == 0)
