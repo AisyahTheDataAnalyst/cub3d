@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/27 12:41:26 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/01 01:19:32 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static bool	direction_allocation(t_player *player)
 	if (player->player_direction == 'N')
 	{
 		player->dir_x = 0;
-		player->dir_y = 1;
+		player->dir_y = -1;
 		return (true);
 	}
 	else if (player->player_direction == 'S')
 	{
 		player->dir_x = 0;
-		player->dir_y = -1;
+		player->dir_y = 1;
 		return (true);
 	}
 	else if (player->player_direction == 'W')
@@ -73,13 +73,13 @@ static bool	plane_allocation(t_player *player)
 	else if (player->player_direction == 'W')
 	{
 		player->plane_x = 0;
-		player->plane_y = 0.66;
+		player->plane_y = -0.66;
 		return (true);
 	}
 	else if (player->player_direction == 'E')
 	{
 		player->plane_x = 0;
-		player->plane_y = -0.66;
+		player->plane_y = 0.66;
 		return (true);
 	}
 	return (false);
