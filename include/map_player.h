@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 12:29:12 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/24 22:50:59 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/02 16:09:41 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ typedef struct s_player
 	char	player_direction;
 	double		y_pos;
 	double		x_pos;
-	int		dir_x;
-	int		dir_y;
+	double		dir_x;
+	double		dir_y;
 	double	plane_x;
 	double	plane_y;
 }				t_player;
