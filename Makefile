@@ -84,7 +84,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) libmlx.a -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) libmlx.a -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext -lm
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 	@echo "$(CLEAR_LINE)"
 	@echo "$(GREEN)$(BOLD)✅ Build Successful: $(NAME)$(RESET)"

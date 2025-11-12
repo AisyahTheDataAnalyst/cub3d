@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/10/31 16:42:55 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:04:55 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,21 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+double	get_time(void)
+{
+	struct timeval	tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec + tv.tv_usec * 1000000);
+}
+
 int	raycasting(t_game *game)
 {
 	int	x;
 
 	x = -1;
+	for (int y = 0; y < WINDOW_HEIGHT; y++)
+		for (int x = 0; x < WINDOW_WIDTH; x++)
+			my_mlx_pixel_put(&game->raycast.data, x, y, 0x000000);
 	while (++x < WINDOW_WIDTH)
 	{
 		double	cameraX = 2 * x / (double)WINDOW_WIDTH - 1;
@@ -109,6 +119,7 @@ int	raycasting(t_game *game)
 		for (int y = drawStart; y < drawEnd; y++)
 			my_mlx_pixel_put(&game->raycast.data, x, y, colour);
 	}
+	// mlx_clear_window(game->raycast.mlx_connection, game->raycast.mlx_window);
 	mlx_put_image_to_window(game->raycast.mlx_connection, game->raycast.mlx_window,
 		game->raycast.data.img, 0, 0);
 	return (EXIT_SUCCESS);

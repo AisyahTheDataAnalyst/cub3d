@@ -6,11 +6,12 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/30 16:49:26 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/02 17:07:07 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
 
 static void	game_init(t_game *game);
 // static void	print_last_look_map(t_map *map);
@@ -26,8 +27,55 @@ int	destroy_window(t_game *game)
 
 int	handle_input(int keycode, t_game *game)
 {
+	double rotSpeed = 0.05;
 	if (keycode == 65307)
 		destroy_window(game);
+	if (keycode == 119)
+	{
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.dir_x * 0.1)] == '0')
+			game->player.x_pos += game->player.dir_x * 0.1;
+		if (game->map.map[(int)(game->player.y_pos + game->player.dir_y * 0.1)][(int)(game->player.x_pos)] == '0')
+			game->player.y_pos += game->player.dir_y * 0.1;
+	}
+	if (keycode == 115)
+	{
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.dir_x * 0.1)] == '0')
+			game->player.x_pos -= game->player.dir_x * 0.1;
+		if (game->map.map[(int)(game->player.y_pos - game->player.dir_y * 0.1)][(int)(game->player.x_pos)] == '0')
+			game->player.y_pos -= game->player.dir_y * 0.1;
+	}
+	if (keycode == 97)
+	{
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.plane_x * 0.1)] == '0')
+			game->player.x_pos -= game->player.plane_x * 0.1;
+		if (game->map.map[(int)(game->player.x_pos - game->player.plane_y * 0.1)][(int)(game->player.x_pos)] == '0')
+			game->player.y_pos -= game->player.plane_y * 0.1;
+	}
+	if (keycode == 100)
+	{
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.plane_x * 0.1)] == '0')
+			game->player.x_pos += game->player.plane_x * 0.1;
+		if (game->map.map[(int)(game->player.x_pos + game->player.plane_y * 0.1)][(int)(game->player.x_pos)] == '0')
+			game->player.y_pos += game->player.plane_y * 0.1;
+	}
+	if (keycode == 65363)
+	{
+		double oldDirX = game->player.dir_x;
+		game->player.dir_x = game->player.dir_x * cos(rotSpeed) - game->player.dir_y * sin(rotSpeed);
+		game->player.dir_y = oldDirX * sin(rotSpeed) + game->player.dir_y * cos(rotSpeed);
+		double oldPlaneX = game->player.plane_x;
+		game->player.plane_x = game->player.plane_x * cos(rotSpeed) - game->player.plane_y * sin(rotSpeed);
+		game->player.plane_y = oldPlaneX * sin(rotSpeed) + game->player.plane_y * cos(rotSpeed);
+	}
+	if (keycode == 65361)
+	{
+		double oldDirX = game->player.dir_x;
+		game->player.dir_x = game->player.dir_x * cos(-rotSpeed) - game->player.dir_y * sin(-rotSpeed);
+		game->player.dir_y = oldDirX * sin(-rotSpeed) + game->player.dir_y * cos(-rotSpeed);
+		double oldPlaneX = game->player.plane_x;
+		game->player.plane_x = game->player.plane_x * cos(-rotSpeed) - game->player.plane_y * sin(-rotSpeed);
+		game->player.plane_y = oldPlaneX * sin(-rotSpeed) + game->player.plane_y * cos(-rotSpeed);
+	}
 	return (EXIT_SUCCESS);
 }
 
