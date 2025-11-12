@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:21:49 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/12 12:36:55 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:23:47 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct s_img_data
 {
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		ll;
 	int		endian;
 }				t_img_data;
 
@@ -54,5 +54,6 @@ typedef struct s_raycast
 
 // Need to change this to elsewhere
 void	create_window(t_raycast *raycast);
+void	create_window_image(t_raycast *raycast);
 
 #endif

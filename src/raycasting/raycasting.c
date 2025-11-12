@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/12 14:24:21 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:24:10 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_pixel_color(t_img_data *data, int x, int y)
 		y = 0;
 	if (y >= 64)
 		y = 64;
-	pixel = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	pixel = data->addr + (y * data->ll + x * (data->bpp / 8));
 	return (*(unsigned int *)pixel);
 }
 
@@ -34,7 +34,7 @@ void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y * data->ll + x * (data->bpp / 8));
 	*(unsigned int*)dst = color;
 }
 
