@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/02 15:04:55 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:24:21 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,23 @@
 #include "cub3d.h"
 #include <math.h>
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	get_pixel_color(t_img_data *data, int x, int y)
+{
+	char	*pixel;
+	x = 64 - x;
+	if (x < 0)
+		x = 0;
+	if (x >= 64)
+		x = 64;
+	if (y < 0)
+		y = 0;
+	if (y >= 64)
+		y = 64;
+	pixel = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	return (*(unsigned int *)pixel);
+}
+
+void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -32,11 +48,27 @@ double	get_time(void)
 int	raycasting(t_game *game)
 {
 	int	x;
-
+	
+	// mlx_clear_window(game->raycast.mlx_connection, game->raycast.mlx_window);
 	x = -1;
 	for (int y = 0; y < WINDOW_HEIGHT; y++)
 		for (int x = 0; x < WINDOW_WIDTH; x++)
 			my_mlx_pixel_put(&game->raycast.data, x, y, 0x000000);
+
+	x = -1;
+	while (++x < WINDOW_WIDTH)
+	{
+		int y = -1;
+		while (++y < WINDOW_HEIGHT)
+		{
+			if (WINDOW_HEIGHT / 2  > y)
+				my_mlx_pixel_put(&game->raycast.data, x, y, game->map.ceiling_colour);
+			else
+				my_mlx_pixel_put(&game->raycast.data, x, y, game->map.floor_colour);
+		}
+	}
+	
+	x = -1;
 	while (++x < WINDOW_WIDTH)
 	{
 		double	cameraX = 2 * x / (double)WINDOW_WIDTH - 1;
@@ -109,17 +141,40 @@ int	raycasting(t_game *game)
 			drawStart = 0;
 		int	drawEnd = lineHeight / 2 + WINDOW_HEIGHT / 2;
 		if (drawEnd > WINDOW_HEIGHT)
-			drawEnd = WINDOW_HEIGHT;
+			drawEnd = WINDOW_HEIGHT - 1;
 
-		int	colour;
+		double	wallX;
 		if (side == 0)
-			colour = 0x00E23434;
+			wallX = game->player.y_pos + perpWallDist * rayDirY;
 		else
-			colour = 0x00C61D1D;
+			wallX = game->player.x_pos + perpWallDist * rayDirX;
+		wallX -= floor((wallX));
+
+		int	texX = (int)(wallX * (double)64);
+		if (side == 0 && rayDirX > 0)
+			texX = 64 - texX - 1;
+		if (side == 1 && rayDirY < 0)
+			texX = 64 - texX - 1;
+		
+		double	step = 1.0 * 64 / lineHeight;
+		double	texPos = (drawStart - WINDOW_HEIGHT / 2 + lineHeight / 2) * step;
+		int		color;
 		for (int y = drawStart; y < drawEnd; y++)
-			my_mlx_pixel_put(&game->raycast.data, x, y, colour);
+		{
+			int	texY = (int)texPos & (64 - 1);
+			texPos += step;
+			if (side == 1 && rayDirY < 0)
+				color = get_pixel_color(&game->raycast.assets.n_wall, texX, texY);
+			else if (side == 1 && rayDirY > 0)
+				color = get_pixel_color(&game->raycast.assets.s_wall, texX, texY);
+			else if (side == 0 && rayDirX > 0)
+				color = get_pixel_color(&game->raycast.assets.e_wall, texX, texY);
+			else if (side == 0 && rayDirX < 0)
+				color = get_pixel_color(&game->raycast.assets.w_wall, texX, texY);
+			my_mlx_pixel_put(&game->raycast.data, x, y, color);
+		}
 	}
-	// mlx_clear_window(game->raycast.mlx_connection, game->raycast.mlx_window);
+	
 	mlx_put_image_to_window(game->raycast.mlx_connection, game->raycast.mlx_window,
 		game->raycast.data.img, 0, 0);
 	return (EXIT_SUCCESS);

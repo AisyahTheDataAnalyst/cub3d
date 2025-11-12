@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/02 17:07:07 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:38:58 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	handle_input(int keycode, t_game *game)
 int	main(int ac, char **av)
 {
 	t_game		game;
+	int			width;
+	int			height;
 
 	if (ac != 2)
 		return (ft_putstr_fd("Usage: ./program maps/map\n", 2), 1);
@@ -94,6 +96,14 @@ int	main(int ac, char **av)
 	game.raycast.data.img = mlx_new_image(game.raycast.mlx_connection, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.raycast.data.addr = mlx_get_data_addr(game.raycast.data.img, &game.raycast.data.bits_per_pixel,
 		&game.raycast.data.line_length, &game.raycast.data.endian);
+	game.raycast.assets.n_wall.img = mlx_xpm_file_to_image(game.raycast.mlx_connection, game.map.no_txt, &width, &height);
+	game.raycast.assets.n_wall.addr = mlx_get_data_addr(game.raycast.assets.n_wall.img, &game.raycast.assets.n_wall.bits_per_pixel, &game.raycast.assets.n_wall.line_length, &game.raycast.assets.n_wall.endian);
+	game.raycast.assets.s_wall.img = mlx_xpm_file_to_image(game.raycast.mlx_connection, game.map.so_txt, &width, &height);
+	game.raycast.assets.s_wall.addr = mlx_get_data_addr(game.raycast.assets.s_wall.img, &game.raycast.assets.s_wall.bits_per_pixel, &game.raycast.assets.s_wall.line_length, &game.raycast.assets.s_wall.endian);
+	game.raycast.assets.e_wall.img = mlx_xpm_file_to_image(game.raycast.mlx_connection, game.map.ea_txt, &width, &height);
+	game.raycast.assets.e_wall.addr = mlx_get_data_addr(game.raycast.assets.e_wall.img, &game.raycast.assets.e_wall.bits_per_pixel, &game.raycast.assets.e_wall.line_length, &game.raycast.assets.e_wall.endian);
+	game.raycast.assets.w_wall.img = mlx_xpm_file_to_image(game.raycast.mlx_connection, game.map.we_txt, &width, &height);
+	game.raycast.assets.w_wall.addr = mlx_get_data_addr(game.raycast.assets.w_wall.img, &game.raycast.assets.w_wall.bits_per_pixel, &game.raycast.assets.w_wall.line_length, &game.raycast.assets.w_wall.endian);
 	mlx_hook(game.raycast.mlx_window, 2, 1L << 0, handle_input, &game);
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);
 	mlx_loop_hook(game.raycast.mlx_connection, &raycasting, &game);
