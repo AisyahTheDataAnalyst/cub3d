@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/12 15:27:15 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:44:21 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,30 @@ int	handle_input(int keycode, t_game *game)
 		destroy_window(game);
 	if (keycode == 119)
 	{
-		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.dir_x * 0.1)] == '0')
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.dir_x * 0.11)] == '0')
 			game->player.x_pos += game->player.dir_x * 0.1;
-		if (game->map.map[(int)(game->player.y_pos + game->player.dir_y * 0.1)][(int)(game->player.x_pos)] == '0')
+		if (game->map.map[(int)(game->player.y_pos + game->player.dir_y * 0.11)][(int)(game->player.x_pos)] == '0')
 			game->player.y_pos += game->player.dir_y * 0.1;
 	}
 	if (keycode == 115)
 	{
-		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.dir_x * 0.1)] == '0')
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.dir_x * 0.11)] == '0')
 			game->player.x_pos -= game->player.dir_x * 0.1;
-		if (game->map.map[(int)(game->player.y_pos - game->player.dir_y * 0.1)][(int)(game->player.x_pos)] == '0')
+		if (game->map.map[(int)(game->player.y_pos - game->player.dir_y * 0.11)][(int)(game->player.x_pos)] == '0')
 			game->player.y_pos -= game->player.dir_y * 0.1;
 	}
 	if (keycode == 97)
 	{
-		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.plane_x * 0.1)] == '0')
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos - game->player.plane_x * 0.11)] == '0')
 			game->player.x_pos -= game->player.plane_x * 0.1;
-		if (game->map.map[(int)(game->player.x_pos - game->player.plane_y * 0.1)][(int)(game->player.x_pos)] == '0')
+		if (game->map.map[(int)(game->player.x_pos - game->player.plane_y * 0.11)][(int)(game->player.x_pos)] == '0')
 			game->player.y_pos -= game->player.plane_y * 0.1;
 	}
 	if (keycode == 100)
 	{
-		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.plane_x * 0.1)] == '0')
+		if (game->map.map[(int)game->player.y_pos][(int)(game->player.x_pos + game->player.plane_x * 0.11)] == '0')
 			game->player.x_pos += game->player.plane_x * 0.1;
-		if (game->map.map[(int)(game->player.x_pos + game->player.plane_y * 0.1)][(int)(game->player.x_pos)] == '0')
+		if (game->map.map[(int)(game->player.x_pos + game->player.plane_y * 0.11)][(int)(game->player.x_pos)] == '0')
 			game->player.y_pos += game->player.plane_y * 0.1;
 	}
 	if (keycode == 65363)
@@ -103,7 +103,7 @@ int	main(int ac, char **av)
 	mlx_hook(game.raycast.mlx_window, 2, 1L << 0, handle_input, &game);
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);
 	mlx_loop_hook(game.raycast.mlx_connection, &raycasting, &game);
-	mlx_loop(game.raycast.mlx_connection);	
+	mlx_loop(game.raycast.mlx_connection);
 	all_cleanup(&game);
 	return (0);
 }
@@ -113,7 +113,7 @@ static void	game_init(t_game *game)
 	ft_bzero(game, sizeof(t_game));
 	create_window(&game->raycast);
 	create_window_image(&game->raycast);
-	
+
 }
 
 // static void	print_last_look_map(t_map *map)
