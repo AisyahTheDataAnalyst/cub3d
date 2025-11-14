@@ -6,11 +6,10 @@
 /*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/12 15:24:10 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/14 17:17:35 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "raycasting.h"
 #include "cub3d.h"
 #include <math.h>
 
@@ -30,14 +29,6 @@ int	get_pixel_color(t_img_data *data, int x, int y)
 	return (*(unsigned int *)pixel);
 }
 
-void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->ll + x * (data->bpp / 8));
-	*(unsigned int*)dst = color;
-}
-
 double	get_time(void)
 {
 	struct timeval	tv;
@@ -45,137 +36,137 @@ double	get_time(void)
 	return (tv.tv_sec + tv.tv_usec * 1000000);
 }
 
+void	init_step_and_side(t_game *game, t_ray *ray)
+{
+	if (ray->rayDirX < 0)
+	{
+		ray->stepX = -1;
+		ray->sideDistX = (game->player.x_pos - ray->mapX) * ray->deltaDistX;
+	}
+	else
+	{
+		ray->stepX = 1;
+		ray->sideDistX = (ray->mapX + 1.0 - game->player.x_pos)
+			* ray->deltaDistX;
+	}
+	if (ray->rayDirY < 0)
+	{
+		ray->stepY = -1;
+		ray->sideDistY = (game->player.y_pos - ray->mapY) * ray->deltaDistY;
+	}
+	else
+	{
+		ray->stepY = 1;
+		ray->sideDistY = (ray->mapY + 1.0 - game->player.y_pos)
+			* ray->deltaDistY;
+	}
+}
+
+void	init_ray(t_game *game, t_ray *ray, int x)
+{
+	ray->cameraX = 2 * x / (double)WINDOW_WIDTH - 1;
+	ray->rayDirX = ray->cameraX * game->player.plane_x + game->player.dir_x;
+	ray->rayDirY = ray->cameraX * game->player.plane_y + game->player.dir_y;
+	ray->mapX = (int)game->player.x_pos;
+	ray->mapY = (int)game->player.y_pos;
+	ray->hit = 0;
+	if (ray->rayDirX == 0)
+		ray->deltaDistX = 1e30;
+	else
+		ray->deltaDistX = fabs(1 / ray->rayDirX);
+	if (ray->rayDirY == 0)
+		ray->deltaDistY = 1e30;
+	else
+		ray->deltaDistY = fabs(1 / ray->rayDirY);
+	init_step_and_side(game, ray);
+}
+
+void	perform_dda(t_game *game, t_ray *ray)
+{
+	while (ray->hit == 0)
+	{
+		if (ray->sideDistX < ray->sideDistY)
+		{
+			ray->sideDistX += ray->deltaDistX;
+			ray->mapX += ray->stepX;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->sideDistY += ray->deltaDistY;
+			ray->mapY += ray->stepY;
+			ray->side = 1;
+		}
+		if (game->map.map[ray->mapY][ray->mapX] == 49)
+			ray->hit = 1;
+	}
+}
+
+void	calculate_wall(t_game *game, t_ray *ray)
+{
+	if (ray->side == 0)
+		ray->perpWallDist = (ray->sideDistX - ray->deltaDistX);
+	else
+		ray->perpWallDist = (ray->sideDistY - ray->deltaDistY);
+	ray->lineHeight = (int)(WINDOW_HEIGHT / ray->perpWallDist);
+	ray->drawStart = -ray->lineHeight / 2 + WINDOW_HEIGHT / 2;
+	if (ray->drawStart < 0)
+		ray->drawStart = 0;
+	ray->drawEnd = ray->lineHeight / 2 + WINDOW_HEIGHT / 2;
+	if (ray->drawEnd > WINDOW_HEIGHT)
+		ray->drawEnd = WINDOW_HEIGHT - 1;
+	if (ray->side == 0)
+		ray->wallX = game->player.y_pos + ray->perpWallDist * ray->rayDirY;
+	else
+		ray->wallX = game->player.x_pos + ray->perpWallDist * ray->rayDirX;
+	ray->wallX -= floor((ray->wallX));
+	ray->texX = (int)(ray->wallX * (double)64);
+	if (ray->side == 0 && ray->rayDirX > 0)
+		ray->texX = 64 - ray->texX - 1;
+	if (ray->side == 1 && ray->rayDirY < 0)
+		ray->texX = 64 - ray->texX - 1;
+}
+
+void	draw_walls(t_game *game, t_ray *ray, int x)
+{
+	int	y;
+
+	ray->step = 1.0 * 64 / ray->lineHeight;
+	ray->texPos = (ray->drawStart - WINDOW_HEIGHT / 2 + ray->lineHeight / 2)
+		* ray->step;
+	y = ray->drawStart;
+	while (++y < ray->drawEnd)
+	{
+		ray->texY = (int)ray->texPos & (64 - 1);
+		ray->texPos += ray->step;
+		if (ray->side == 1 && ray->rayDirY < 0)
+			ray->color = get_pixel_color(&game->raycast.assets.n_wall, ray->texX, ray->texY);
+		else if (ray->side == 1 && ray->rayDirY > 0)
+			ray->color = get_pixel_color(&game->raycast.assets.s_wall, ray->texX, ray->texY);
+		if (ray->side == 0 && ray->rayDirX > 0)
+			ray->color = get_pixel_color(&game->raycast.assets.e_wall, ray->texX, ray->texY);
+		if (ray->side == 0 && ray->rayDirY < 0)
+			ray->color = get_pixel_color(&game->raycast.assets.w_wall, ray->texX, ray->texY);
+		my_mlx_pixel_put(&game->raycast.data, x, y, ray->color);
+	}
+}
+
 int	raycasting(t_game *game)
 {
-	int	x;
-	
-	// mlx_clear_window(game->raycast.mlx_connection, game->raycast.mlx_window);
-	x = -1;
-	for (int y = 0; y < WINDOW_HEIGHT; y++)
-		for (int x = 0; x < WINDOW_WIDTH; x++)
-			my_mlx_pixel_put(&game->raycast.data, x, y, 0x000000);
+	int		x;
+	t_ray	ray;
 
 	x = -1;
+	clear_window(game);
+	draw_ceil_floor(game);
 	while (++x < WINDOW_WIDTH)
 	{
-		int y = -1;
-		while (++y < WINDOW_HEIGHT)
-		{
-			if (WINDOW_HEIGHT / 2  > y)
-				my_mlx_pixel_put(&game->raycast.data, x, y, game->map.ceiling_colour);
-			else
-				my_mlx_pixel_put(&game->raycast.data, x, y, game->map.floor_colour);
-		}
+		init_ray(game, &ray, x);
+		perform_dda(game, &ray);
+		calculate_wall(game, &ray);
+		draw_walls(game, &ray, x);
 	}
-	
-	x = -1;
-	while (++x < WINDOW_WIDTH)
-	{
-		double	cameraX = 2 * x / (double)WINDOW_WIDTH - 1;
-		double	rayDirX = cameraX * game->player.plane_x + game->player.dir_x;
-		double	rayDirY = cameraX * game->player.plane_y + game->player.dir_y;
-
-		int	mapX = (int)game->player.x_pos;
-		int	mapY = (int)game->player.y_pos;
-
-		double	sideDistX;
-		double	sideDistY;
-
-		double	deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-		double	deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
-
-		double	perpWallDist;
-
-		int	stepX;
-		int	stepY;
-
-		int	hit = 0;
-		int	side;
-
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (game->player.x_pos - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - game->player.x_pos) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (game->player.y_pos - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - game->player.y_pos) * deltaDistY;
-		}
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (game->map.map[mapY][mapX] == 49)
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
-
-		int	lineHeight = (int)(WINDOW_HEIGHT / perpWallDist);
-
-		int	drawStart = -lineHeight / 2 + WINDOW_HEIGHT / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int	drawEnd = lineHeight / 2 + WINDOW_HEIGHT / 2;
-		if (drawEnd > WINDOW_HEIGHT)
-			drawEnd = WINDOW_HEIGHT - 1;
-
-		double	wallX;
-		if (side == 0)
-			wallX = game->player.y_pos + perpWallDist * rayDirY;
-		else
-			wallX = game->player.x_pos + perpWallDist * rayDirX;
-		wallX -= floor((wallX));
-
-		int	texX = (int)(wallX * (double)64);
-		if (side == 0 && rayDirX > 0)
-			texX = 64 - texX - 1;
-		if (side == 1 && rayDirY < 0)
-			texX = 64 - texX - 1;
-		
-		double	step = 1.0 * 64 / lineHeight;
-		double	texPos = (drawStart - WINDOW_HEIGHT / 2 + lineHeight / 2) * step;
-		int		color;
-		for (int y = drawStart; y < drawEnd; y++)
-		{
-			int	texY = (int)texPos & (64 - 1);
-			texPos += step;
-			if (side == 1 && rayDirY < 0)
-				color = get_pixel_color(&game->raycast.assets.n_wall, texX, texY);
-			else if (side == 1 && rayDirY > 0)
-				color = get_pixel_color(&game->raycast.assets.s_wall, texX, texY);
-			else if (side == 0 && rayDirX > 0)
-				color = get_pixel_color(&game->raycast.assets.e_wall, texX, texY);
-			else if (side == 0 && rayDirX < 0)
-				color = get_pixel_color(&game->raycast.assets.w_wall, texX, texY);
-			my_mlx_pixel_put(&game->raycast.data, x, y, color);
-		}
-	}
-	
-	mlx_put_image_to_window(game->raycast.mlx_connection, game->raycast.mlx_window,
-		game->raycast.data.img, 0, 0);
+	mlx_put_image_to_window(game->raycast.mlx_connection,
+		game->raycast.mlx_window, game->raycast.data.img, 0, 0);
 	return (EXIT_SUCCESS);
 }
