@@ -62,7 +62,9 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		$(addprefix $(SRC_UTILS)/, \
 		cleanup.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
-		window_utils.c))
+		window_utils.c) \
+		$(addprefix $(SRC_RAYCASTING)/, \
+		render_utils.c))
 
 #$(wildcard $(SRC_DIR)/token/*.c)
 
