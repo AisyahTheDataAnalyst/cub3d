@@ -3,101 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:44:35 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/14 17:17:35 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/15 21:03:32 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
-
-int	get_pixel_color(t_img_data *data, int x, int y)
-{
-	char	*pixel;
-	x = 64 - x;
-	if (x < 0)
-		x = 0;
-	if (x >= 64)
-		x = 64;
-	if (y < 0)
-		y = 0;
-	if (y >= 64)
-		y = 64;
-	pixel = data->addr + (y * data->ll + x * (data->bpp / 8));
-	return (*(unsigned int *)pixel);
-}
-
-double	get_time(void)
-{
-	struct timeval	tv;
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec + tv.tv_usec * 1000000);
-}
 
 void	init_step_and_side(t_game *game, t_ray *ray)
 {
-	if (ray->rayDirX < 0)
+	if (ray->ray_dir_x < 0)
 	{
-		ray->stepX = -1;
-		ray->sideDistX = (game->player.x_pos - ray->mapX) * ray->deltaDistX;
+		ray->step_x = -1;
+		ray->side_dist_x = (game->player.x_pos
+				- ray->map_x) * ray->delta_dist_x;
 	}
 	else
 	{
-		ray->stepX = 1;
-		ray->sideDistX = (ray->mapX + 1.0 - game->player.x_pos)
-			* ray->deltaDistX;
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - game->player.x_pos)
+			* ray->delta_dist_x;
 	}
-	if (ray->rayDirY < 0)
+	if (ray->ray_dir_y < 0)
 	{
-		ray->stepY = -1;
-		ray->sideDistY = (game->player.y_pos - ray->mapY) * ray->deltaDistY;
+		ray->step_y = -1;
+		ray->side_dist_y = (game->player.y_pos
+				- ray->map_y) * ray->delta_dist_y;
 	}
 	else
 	{
-		ray->stepY = 1;
-		ray->sideDistY = (ray->mapY + 1.0 - game->player.y_pos)
-			* ray->deltaDistY;
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - game->player.y_pos)
+			* ray->delta_dist_y;
 	}
 }
 
 void	init_ray(t_game *game, t_ray *ray, int x)
 {
-	ray->cameraX = 2 * x / (double)WINDOW_WIDTH - 1;
-	ray->rayDirX = ray->cameraX * game->player.plane_x + game->player.dir_x;
-	ray->rayDirY = ray->cameraX * game->player.plane_y + game->player.dir_y;
-	ray->mapX = (int)game->player.x_pos;
-	ray->mapY = (int)game->player.y_pos;
+	ray->camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
+	ray->ray_dir_x = ray->camera_x * game->player.plane_x + game->player.dir_x;
+	ray->ray_dir_y = ray->camera_x * game->player.plane_y + game->player.dir_y;
+	ray->map_x = (int)game->player.x_pos;
+	ray->map_y = (int)game->player.y_pos;
 	ray->hit = 0;
-	if (ray->rayDirX == 0)
-		ray->deltaDistX = 1e30;
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
 	else
-		ray->deltaDistX = fabs(1 / ray->rayDirX);
-	if (ray->rayDirY == 0)
-		ray->deltaDistY = 1e30;
+		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
 	else
-		ray->deltaDistY = fabs(1 / ray->rayDirY);
+		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 	init_step_and_side(game, ray);
 }
 
-void	perform_dda(t_game *game, t_ray *ray)
+void	dda(t_game *game, t_ray *ray)
 {
 	while (ray->hit == 0)
 	{
-		if (ray->sideDistX < ray->sideDistY)
+		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			ray->sideDistX += ray->deltaDistX;
-			ray->mapX += ray->stepX;
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
-			ray->sideDistY += ray->deltaDistY;
-			ray->mapY += ray->stepY;
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map.map[ray->mapY][ray->mapX] == 49)
+		if (game->map.map[ray->map_y][ray->map_x] == 49)
 			ray->hit = 1;
 	}
 }
@@ -105,68 +83,53 @@ void	perform_dda(t_game *game, t_ray *ray)
 void	calculate_wall(t_game *game, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perpWallDist = (ray->sideDistX - ray->deltaDistX);
+		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
-		ray->perpWallDist = (ray->sideDistY - ray->deltaDistY);
-	ray->lineHeight = (int)(WINDOW_HEIGHT / ray->perpWallDist);
-	ray->drawStart = -ray->lineHeight / 2 + WINDOW_HEIGHT / 2;
-	if (ray->drawStart < 0)
-		ray->drawStart = 0;
-	ray->drawEnd = ray->lineHeight / 2 + WINDOW_HEIGHT / 2;
-	if (ray->drawEnd > WINDOW_HEIGHT)
-		ray->drawEnd = WINDOW_HEIGHT - 1;
+		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+	ray->line_height = (int)(WINDOW_HEIGHT / ray->perp_wall_dist);
+	ray->draw_start = -ray->line_height / 2 + WINDOW_HEIGHT / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->line_height / 2 + WINDOW_HEIGHT / 2;
+	if (ray->draw_end > WINDOW_HEIGHT)
+		ray->draw_end = WINDOW_HEIGHT - 1;
 	if (ray->side == 0)
-		ray->wallX = game->player.y_pos + ray->perpWallDist * ray->rayDirY;
+		ray->wall_x = game->player.y_pos + ray->perp_wall_dist * ray->ray_dir_y;
 	else
-		ray->wallX = game->player.x_pos + ray->perpWallDist * ray->rayDirX;
-	ray->wallX -= floor((ray->wallX));
-	ray->texX = (int)(ray->wallX * (double)64);
-	if (ray->side == 0 && ray->rayDirX > 0)
-		ray->texX = 64 - ray->texX - 1;
-	if (ray->side == 1 && ray->rayDirY < 0)
-		ray->texX = 64 - ray->texX - 1;
+		ray->wall_x = game->player.x_pos + ray->perp_wall_dist * ray->ray_dir_x;
+	ray->wall_x -= floor((ray->wall_x));
+	ray->tex_x = (int)(ray->wall_x * (double)64);
+	if (ray->side == 0 && ray->ray_dir_x > 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
+	if (ray->side == 1 && ray->ray_dir_y < 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
 }
 
 void	draw_walls(t_game *game, t_ray *ray, int x)
 {
 	int	y;
 
-	ray->step = 1.0 * 64 / ray->lineHeight;
-	ray->texPos = (ray->drawStart - WINDOW_HEIGHT / 2 + ray->lineHeight / 2)
-		* ray->step;
-	y = ray->drawStart;
-	while (++y < ray->drawEnd)
+	y = ray->draw_start;
+	ray->step = 1.0 * 64 / ray->line_height;
+	ray->tex_pos = (ray->draw_start - WINDOW_HEIGHT / 2
+			+ ray->line_height / 2) * ray->step;
+	while (y < ray->draw_end)
 	{
-		ray->texY = (int)ray->texPos & (64 - 1);
-		ray->texPos += ray->step;
-		if (ray->side == 1 && ray->rayDirY < 0)
-			ray->color = get_pixel_color(&game->raycast.assets.n_wall, ray->texX, ray->texY);
-		else if (ray->side == 1 && ray->rayDirY > 0)
-			ray->color = get_pixel_color(&game->raycast.assets.s_wall, ray->texX, ray->texY);
-		if (ray->side == 0 && ray->rayDirX > 0)
-			ray->color = get_pixel_color(&game->raycast.assets.e_wall, ray->texX, ray->texY);
-		if (ray->side == 0 && ray->rayDirY < 0)
-			ray->color = get_pixel_color(&game->raycast.assets.w_wall, ray->texX, ray->texY);
+		ray->tex_y = (int)ray->tex_pos & (64 - 1);
+		ray->tex_pos += ray->step;
+		if (ray->side == 1 && ray->ray_dir_y < 0)
+			ray->color = get_pixel(&game->raycast.assets.n_wall,
+					ray->tex_x, ray->tex_y);
+		else if (ray->side == 1 && ray->ray_dir_y > 0)
+			ray->color = get_pixel(&game->raycast.assets.s_wall,
+					ray->tex_x, ray->tex_y);
+		else if (ray->side == 0 && ray->ray_dir_x > 0)
+			ray->color = get_pixel(&game->raycast.assets.e_wall,
+					ray->tex_x, ray->tex_y);
+		else if (ray->side == 0 && ray->ray_dir_x < 0)
+			ray->color = get_pixel(&game->raycast.assets.w_wall,
+					ray->tex_x, ray->tex_y);
 		my_mlx_pixel_put(&game->raycast.data, x, y, ray->color);
+		y++;
 	}
-}
-
-int	raycasting(t_game *game)
-{
-	int		x;
-	t_ray	ray;
-
-	x = -1;
-	clear_window(game);
-	draw_ceil_floor(game);
-	while (++x < WINDOW_WIDTH)
-	{
-		init_ray(game, &ray, x);
-		perform_dda(game, &ray);
-		calculate_wall(game, &ray);
-		draw_walls(game, &ray, x);
-	}
-	mlx_put_image_to_window(game->raycast.mlx_connection,
-		game->raycast.mlx_window, game->raycast.data.img, 0, 0);
-	return (EXIT_SUCCESS);
 }
