@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:52:57 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/14 13:54:26 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/15 21:04:10 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@ void	create_window_image(t_raycast *raycast)
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	raycast->data.addr = mlx_get_data_addr(raycast->data.img,
 			&raycast->data.bpp, &raycast->data.ll, &raycast->data.endian);
-}
-
-void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->ll + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
 }
 
 void	clear_window(t_game *game)
