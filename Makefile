@@ -64,7 +64,11 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		$(addprefix $(SRC_RAYCASTING)/, \
 		window_utils.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
-		render_utils.c))
+		sprite_utils.c) \
+		$(addprefix $(SRC_RAYCASTING)/, \
+		movement_utils.c) \
+		$(addprefix $(SRC_RAYCASTING)/, \
+		draw_utils.c))
 
 #$(wildcard $(SRC_DIR)/token/*.c)
 
