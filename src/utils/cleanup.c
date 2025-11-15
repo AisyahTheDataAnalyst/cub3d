@@ -3,18 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:26:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/13 15:26:00 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/15 21:02:52 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	free_resources(t_game *game)
+{
+	mlx_destroy_image(game->raycast.mlx_connection, game->raycast.data.img);
+	mlx_destroy_image(game->raycast.mlx_connection,
+		game->raycast.assets.n_wall.img);
+	mlx_destroy_image(game->raycast.mlx_connection,
+		game->raycast.assets.s_wall.img);
+	mlx_destroy_image(game->raycast.mlx_connection,
+		game->raycast.assets.e_wall.img);
+	mlx_destroy_image(game->raycast.mlx_connection,
+		game->raycast.assets.w_wall.img);
+}
+
 void	all_cleanup(t_game *game)
 {
-	// raycasting_cleanup();
 	parsing_cleanup(&game->parse, &game->map);
 }
 
