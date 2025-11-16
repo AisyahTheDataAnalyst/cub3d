@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/15 21:03:04 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:38:02 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	game_init(t_game *game)
+static void	raycast_init(t_game *game)
 {
-	ft_bzero(game, sizeof(t_game));
 	create_window(&game->raycast);
 	create_window_image(&game->raycast);
 }
@@ -76,17 +75,16 @@ int	raycasting(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
-// print_last_look_map(&game.map);
 int	main(int ac, char **av)
 {
 	t_game		game;
 
 	if (ac != 2)
 		return (ft_putstr_fd("Usage: ./program maps/map\n", 2), 1);
-	game_init(&game);
+	ft_bzero(&game, sizeof(t_game));
 	if (parsing(&game.parse, &game.player, &game.map, av) == 1)
 		return (parsing_cleanup(&game.parse, &game.map), 1);
-	ft_putendl_fd("Success parsing!", 1);
+	raycast_init(&game);
 	sprite_loader(&game);
 	mlx_hook(game.raycast.mlx_window, 2, 1L << 0, handle_input, &game);
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);

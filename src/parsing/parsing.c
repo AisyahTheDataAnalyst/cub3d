@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/19 19:31:03 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:18:22 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ static bool	got_all_elements(t_parse *parse, char *line)
 	// parse->width_start, parse->width_end);
 	// printf("m_height: %d m_width: %d\n",
 	// parse->map_height, parse->map_width);
+	// map_replace_space_with_wall(map);
 int	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
@@ -136,6 +137,5 @@ int	parse_map(t_parse *parse, t_player *player, t_map *map)
 	save_map(parse, map);
 	if (!is_map_valid(parse, player, map))
 		return (0);
-	// map_replace_space_with_wall(map);
 	return (1);
 }

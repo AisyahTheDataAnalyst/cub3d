@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:17:16 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/12 12:11:12 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:18:48 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ bool	parse_player(t_player *player, t_map *map)
 
 static bool	direction_allocation(t_player *player)
 {
-	// Might need to change dir y
 	if (player->player_direction == 'N')
 	{
 		player->dir_x = 0;

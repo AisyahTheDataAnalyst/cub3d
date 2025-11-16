@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:26:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/15 21:02:52 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:42:29 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	all_cleanup(t_game *game)
 {
 	parsing_cleanup(&game->parse, &game->map);
 }
+	// free_resources(game);
 
 void	parsing_cleanup(t_parse *parse, t_map *map)
 {
