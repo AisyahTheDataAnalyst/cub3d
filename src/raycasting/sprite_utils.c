@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 20:25:34 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/15 20:44:55 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:43:29 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	sprite_loader(t_game *game)
 {
 	int			index;
 	char		*array[NUM_TEX];
-	t_img_data	*walls[4];
+	t_img_data	*walls[NUM_TEX];
 
 	array[0] = game->map.no_txt;
 	array[1] = game->map.we_txt;
