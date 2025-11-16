@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:34:04 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 13:07:40 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:26:07 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_parsing(t_parse *parse, char **av)
 	parse->elements_status = true;
 }
 
-	// printf("err_msg: %s\n", msg);
 void	err_msg(t_parse *parse, char *msg)
 {
 	if (!parse->err_msg)
@@ -44,8 +43,6 @@ void	free_array(char **str)
 	free(str);
 }
 
-	// printf("ori_file_type: %s\n", ori_file_type);
-	// printf("file_ext: %s\n", file_extension);
 bool	accurate_file_type(char *map_filename, char *file_extension)
 {
 	char	*ori_file_type;

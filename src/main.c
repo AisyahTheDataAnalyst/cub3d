@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 13:16:04 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:30:03 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	raycasting(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
+	// print_last_look_map(&game.map);
 int	main(int ac, char **av)
 {
 	t_game		game;

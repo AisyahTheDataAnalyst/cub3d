@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 12:18:22 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:25:23 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,6 @@ static bool	other_edge_cases_elements(char *str, t_parse *parse)
 	return (false);
 }
 
-	// printf("notxt: %d\nsotxt: %d\nwetxt: %d\neatxt: %d\nf: %d\nc: %d\n",
-	// parse->no_txt_count, parse->so_txt_count, parse->we_txt_count,
-	// parse->ea_txt_count, parse->floor_count, parse->ceiling_count);
-		// printf("got all elements!\n");
 static bool	got_all_elements(t_parse *parse, char *line)
 {
 	if (line)
@@ -105,13 +101,6 @@ static bool	got_all_elements(t_parse *parse, char *line)
 	return (false);
 }
 
-	// printf("height_s: %d height_e: %d\n",
-	// parse->height_start, parse->height_end);
-	// printf("width_s: %d width_e: %d\n",
-	// parse->width_start, parse->width_end);
-	// printf("m_height: %d m_width: %d\n",
-	// parse->map_height, parse->map_width);
-	// map_replace_space_with_wall(map);
 int	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
