@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:21:49 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/16 16:38:39 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:44:12 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define WINDOW_WIDTH 854
 # define WINDOW_HEIGHT 480
 # define NUM_TEX 4
+# define MOVE_CHECK 0.04
+# define MOVE_SPEED 0.03
 
 typedef struct s_game	t_game;
 
