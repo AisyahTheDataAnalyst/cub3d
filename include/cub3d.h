@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:39 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/14 13:46:47 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:28:40 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,24 @@
 # define LEFT_KEY 65363
 # define RIGHT_KEY 65361
 
+typedef struct s_keys
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	left;
+	bool	right;
+}	t_keys;
+
 typedef struct s_game
 {
 	t_parse		parse;
 	t_player	player;
 	t_map		map;
 	t_raycast	raycast;
+	t_keys		keys;
 }	t_game;
-
 
 void	all_cleanup(t_game *game);
 void	parsing_cleanup(t_parse *parse, t_map *map);
