@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:27:28 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 13:10:00 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 17:12:55 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ typedef struct s_parse
 }	t_parse;
 
 // parsing.c
-int		parsing(t_parse *parse, t_player *player, t_map *map, char **av);
-int		parse_elements(t_parse *parse, t_map *map, char *line);
-int		parse_map(t_parse *parse, t_player *player, t_map *map);
+bool	parsing(t_parse *parse, t_player *player, t_map *map, char **av);
+bool	parse_elements(t_parse *parse, t_map *map, char *line);
+bool	parse_map(t_parse *parse, t_player *player, t_map *map);
 
 // textures.c
 bool	parse_north_texture(char *str, t_parse *parse, t_map *map);

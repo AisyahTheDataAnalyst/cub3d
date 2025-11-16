@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:32:41 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 14:25:23 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 17:12:10 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,32 @@
 static bool	other_edge_cases_elements(char *str, t_parse *parse);
 static bool	got_all_elements(t_parse *parse, char *line);
 
-int	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
+bool	parsing(t_parse *parse, t_player *player, t_map *map, char **av)
 {
 	char	*line;
 
 	init_parsing(parse, av);
 	if (!accurate_file_type(parse->map_filename, ".cub"))
 		return (err_msg(parse, NOT_CUB_FILE), ft_putendl_fd("Error", 2),
-			ft_putendl_fd(parse->err_msg, 2), 1);
+			ft_putendl_fd(parse->err_msg, 2), false);
 	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
 		return (err_msg(parse, UNOPEN_MAP_FILE),
-			ft_putendl_fd("Error", 2), ft_putendl_fd(parse->err_msg, 2), 1);
+			ft_putendl_fd("Error", 2), ft_putendl_fd(parse->err_msg, 2), false);
 	line = get_next_line(parse->map_fd);
 	if (!parse_elements(parse, map, line))
 		return (ft_putstr_fd("Error\nElements is not properly structured: ", 2),
-			ft_putendl_fd(parse->err_msg, 2), 1);
+			ft_putendl_fd(parse->err_msg, 2), false);
 	if (!parse_map(parse, player, map))
 		return (ft_putstr_fd("Error\nMap is not properly structured: ", 2),
-			ft_putendl_fd(parse->err_msg, 2), 1);
+			ft_putendl_fd(parse->err_msg, 2), false);
 	if (!parse_player(player, map))
-		return (ft_putendl_fd("Error\nView is not properly structured", 2), 1);
-	return (0);
+		return (ft_putendl_fd("Error\nView is not properly structured", 2),
+			false);
+	return (true);
 }
 
-int	parse_elements(t_parse *parse, t_map *map, char *line)
+bool	parse_elements(t_parse *parse, t_map *map, char *line)
 {
 	int		i;
 
@@ -101,30 +102,30 @@ static bool	got_all_elements(t_parse *parse, char *line)
 	return (false);
 }
 
-int	parse_map(t_parse *parse, t_player *player, t_map *map)
+bool	parse_map(t_parse *parse, t_player *player, t_map *map)
 {
 	char	*line;
 
 	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
-		return (err_msg(parse, UNOPEN_MAP_FILE), 0);
+		return (err_msg(parse, UNOPEN_MAP_FILE), false);
 	line = search_map_details(parse);
 	if (!is_map_last_in_file(line, parse))
-		return (err_msg(parse, MAP_IS_NOT_LAST), 0);
+		return (err_msg(parse, MAP_IS_NOT_LAST), false);
 	if ((parse->height_start < 7 || parse->height_start == INT_MAX)
 		|| parse->height_end < 9)
-		return (err_msg(parse, INVALID_MAP), 0);
+		return (err_msg(parse, INVALID_MAP), false);
 	parse->map_height = parse->height_end - parse->height_start + 1;
 	parse->map_width = parse->width_end - parse->width_start + 1;
 	if (parse->map_height < 3 || parse->map_width < 3)
-		return (err_msg(parse, INVALID_MAP), 0);
+		return (err_msg(parse, INVALID_MAP), false);
 	if (!map_has_valid_chars_only(parse))
-		return (0);
+		return (false);
 	parse->map_fd = open(parse->map_filename, O_RDONLY);
 	if (parse->map_fd == -1)
-		return (err_msg(parse, UNOPEN_MAP_FILE), 0);
+		return (err_msg(parse, UNOPEN_MAP_FILE), false);
 	save_map(parse, map);
 	if (!is_map_valid(parse, player, map))
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }
