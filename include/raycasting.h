@@ -6,7 +6,7 @@
 /*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:21:49 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/15 21:02:08 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:38:39 by yosherau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_raycast
 }	t_raycast;
 
 // Need to change this to elsewhere
+void	update_player(t_game *game);
 void	free_resources(t_game *game);
 void	create_window(t_raycast *raycast);
 void	create_window_image(t_raycast *raycast);
