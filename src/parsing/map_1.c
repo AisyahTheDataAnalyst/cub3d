@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 13:05:12 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:23:43 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,6 @@ bool	map_has_valid_chars_only(t_parse *parse)
 	return (true);
 }
 
-	// printf("in save map before\n");
-	// if (!line)
-	// 	printf("line is empty in save map!\n");
-		// printf("map i : %d\n", i);
-		// printf("map i : %dmap j : %d\n", i, j);
-	// printf("in save map after\n");
-	// print_map(parse->map);
 void	save_map(t_parse *parse, t_map *map)
 {
 	int		i;
@@ -103,7 +96,6 @@ void	save_map(t_parse *parse, t_map *map)
 	close(parse->map_fd);
 }
 
-	// printf("len= %d, width= %d\n", len, parse->map_width);
 static char	*substring_into_map(char *line, t_parse *parse)
 {
 	int		len;
@@ -119,31 +111,3 @@ static char	*substring_into_map(char *line, t_parse *parse)
 		res = ft_substr(line, parse->width_start, parse->map_width);
 	return (res);
 }
-
-// bool	map_fully_walled(t_parse *parse)
-// {
-// 	int	y;
-// 	int	x;
-
-// 	y = -1;
-// 	while (parse->map[y++])
-// 	{
-// 		x = -1;
-// 		while (parse->map[y][x++])
-// 		{
-// 			if (not_a_wall(parse->map[y][x]) && (
-// parse->map[y][x + 1] == ' ' || last_char_of_line(parse->map[y][x + 1]) ||
-// parse->map[y][x - 1] == ' ' || x == 0 ||
-// parse->map[y + 1][x] == ' ' || last_char_of_line(parse->map[y + 1][x]) ||
-// parse->map[y - 1][x] == ' ' || y == 0))
-// 				return (false);
-// 			else if (not_a_wall(parse->map[x][y]) &&
-// 				not_a_wall(parse->map[x + 1][y]) &&
-// 				not_a_wall(parse->map[x - 1][y]) &&
-// 				not_a_wall(parse->map[x][y + 1]) &&
-// 				not_a_wall(parse->map[x][y - 1]))
-// 				return (false);
-// 		}
-// 	}
-// 	return (true);
-// }

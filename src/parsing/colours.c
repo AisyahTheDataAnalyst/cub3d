@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colours.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysheraun <ysheraun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/22 15:19:57 by ysheraun         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:24:09 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static bool	filter_raw_colour(char *raw_colour, t_parse *parse)
 	return (true);
 }
 
+// valid	:	999           ,            9        ,        9
+// invalid	:	99    9       ,            9        ,        9        9
 static bool	have_space_between_numbers(char *colour)
 {
 	int	i;
@@ -93,11 +95,7 @@ static bool	have_space_between_numbers(char *colour)
 	}
 	return (false);
 }
-// valid	:	999           ,            9        ,        9
-// invalid	:	99    9       ,            9        ,        9        9
 
-		// printf("floor_c : %d\n", parse->floor_count);
-		// printf("ceiling_c : %d\n", parse->ceiling_count);
 static bool	save_colour(t_parse *parse, t_map *map)
 {
 	int	r;

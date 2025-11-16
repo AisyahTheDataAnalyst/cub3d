@@ -28,6 +28,8 @@ INC_DIR = include
 LIBFT_DIR = libft
 MLX_DIR = minilibx-linux
 LIBFT = $(LIBFT_DIR)/libft.a
+MLX_1 = $(MLX_DIR)/libmlx_Linux.a
+MLX_2 = $(MLX_DIR)/libmlx.a
 INC = -I$(INC_DIR)
 
 # Directories of Parsing
@@ -58,17 +60,14 @@ SRC = $(addprefix $(SRC_DIR)/, \
 		utils_char.c \
 		utils.c) \
 		$(addprefix $(SRC_RAYCASTING)/, \
-		raycasting.c) \
-		$(addprefix $(SRC_UTILS)/, \
-		cleanup.c) \
-		$(addprefix $(SRC_RAYCASTING)/, \
+		draw_utils.c \
+		movement_utils.c \
+		raycasting.c \
+		render_utils.c \
+		sprite_utils.c \
 		window_utils.c) \
-		$(addprefix $(SRC_RAYCASTING)/, \
-		sprite_utils.c) \
-		$(addprefix $(SRC_RAYCASTING)/, \
-		movement_utils.c) \
-		$(addprefix $(SRC_RAYCASTING)/, \
-		draw_utils.c))
+		$(addprefix $(SRC_UTILS)/, \
+		cleanup.c))
 
 #$(wildcard $(SRC_DIR)/token/*.c)
 
@@ -83,6 +82,7 @@ $(LIBFT): FORCE
 	@echo "$(CYAN)  🚀 Building libft...$(RESET)"
 	@echo "$(PINK)$(BOLD)=======================================$(RESET)"
 	@make bonus -C $(LIBFT_DIR)
+	@make -C $(MLX_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -90,7 +90,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) libmlx.a -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext -lm
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_1) $(MLX_2) -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext -lm
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 	@echo "$(CLEAR_LINE)"
 	@echo "$(GREEN)$(BOLD)✅ Build Successful: $(NAME)$(RESET)"
@@ -102,13 +102,14 @@ $(OBJ_DIR): FORCE
 # Clean object files and executable
 clean:
 	@echo "$(RED)❌ Deleting\t$(RESET)$(WHITE)Objects$(RESET)\t$(OBJ_DIR)";
-	@make -C $(LIBFT_DIR) clean
+	@make clean -C $(LIBFT_DIR) 
 	@$(RM) $(OBJ_DIR)
 	@echo "$(GREEN)✅ Removed\t$(RESET)$(WHITE)Objects$(RESET)"
 
 fclean: clean
 	@echo "$(RED)❌ Deleting libraries$(RESET)"
 	@make fclean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
 	@echo "$(RED)❌ Deleting$(RESET)\t$(NAME)"
 	@$(RM) $(NAME)
 	@echo "$(GREEN)✅ Removed\t$(RESET)$(WHITE)$(NAME)$(RESET)"
