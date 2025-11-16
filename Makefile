@@ -28,8 +28,7 @@ INC_DIR = include
 LIBFT_DIR = libft
 MLX_DIR = minilibx-linux
 LIBFT = $(LIBFT_DIR)/libft.a
-MLX_1 = $(MLX_DIR)/libmlx_Linux.a
-MLX_2 = $(MLX_DIR)/libmlx.a
+MLX = $(MLX_DIR)/libmlx.a
 INC = -I$(INC_DIR)
 
 # Directories of Parsing
@@ -90,7 +89,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX_1) $(MLX_2) -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext -lm
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX) -lreadline -I /opt/X11/include -L /opt/X11/lib -lX11 -lXext -lm
 	@printf "$(YELLOW)Compiling\t%-33.33s\r $(GREEN) $(BOLD) $(RESET)" $@
 	@echo "$(CLEAR_LINE)"
 	@echo "$(GREEN)$(BOLD)✅ Build Successful: $(NAME)$(RESET)"
