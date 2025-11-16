@@ -3,6 +3,13 @@
     Memcheck:Leak
 	match-leak-kinds: reachable
     ...
+    fun:calloc
+}
+{
+    ignore_mlx_leaks
+    Memcheck:Leak
+	match-leak-kinds: reachable
+    ...
     fun:mlx_mouse_hide
 }
 {
