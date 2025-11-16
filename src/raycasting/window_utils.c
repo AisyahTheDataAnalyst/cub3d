@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 21:52:57 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/15 21:04:10 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/16 14:04:56 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	clear_window(t_game *game)
 
 int	destroy_window(t_game *game)
 {
+	all_cleanup(game);
 	mlx_destroy_window(game->raycast.mlx_connection, game->raycast.mlx_window);
 	mlx_destroy_display(game->raycast.mlx_connection);
 	free(game->raycast.mlx_connection);
-	all_cleanup(game);
 	exit(EXIT_SUCCESS);
 }

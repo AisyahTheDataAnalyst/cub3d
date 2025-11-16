@@ -13,7 +13,7 @@ run_command()
     echo -e "$INPUT"
 
     echo -e "${YELLOW}[Memory Leak Check]${NC}"
-    valgrind -q --suppressions=./cub3d.supp --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=123 ./cub3D "$INPUT"
+    valgrind -q --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=123 ./cub3D "$INPUT"
     if [ $? -eq 123 ]; then
         echo -e "${RED}Memory Leak: KO${NC}"
     else
@@ -21,7 +21,7 @@ run_command()
     fi
 
     echo -e "${YELLOW}[FD Leak Check]${NC}"
-    valgrind -q --suppressions=./cub3d.supp --track-fds=yes --error-exitcode=123 ./cub3D "$INPUT"
+    valgrind -q --track-fds=yes --error-exitcode=123 ./cub3D "$INPUT"
     if [ $? -eq 123 ]; then
         echo -e "${RED}FD Leak: KO${NC}"
     else
