@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:26:25 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 17:06:55 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/18 10:26:09 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,5 @@ int	main(int ac, char **av)
 	mlx_hook(game.raycast.mlx_window, 17, 1L << 17, destroy_window, &game);
 	mlx_loop_hook(game.raycast.mlx_connection, &raycasting, &game);
 	mlx_loop(game.raycast.mlx_connection);
-	all_cleanup(&game);
 	return (0);
 }

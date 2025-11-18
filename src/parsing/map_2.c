@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:20:40 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 14:24:33 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/18 10:24:53 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col);
 // static void	print_dup_map(char **dup_map);
 // static void	print_map(t_map *map);
 
-	// print_dup_map(dup_map);
 bool	is_map_valid(t_parse *parse, t_player *player, t_map *map)
 {
 	char	**dup_map;
@@ -54,22 +53,6 @@ static bool	flood_fill(t_parse *parse, char **dup_map, int row, int col)
 		|| !flood_fill(parse, dup_map, row, col - 1))
 		return (false);
 	return (true);
-}
-
-	// print_map(map);
-void	map_replace_space_with_wall(t_map *map)
-{
-	int	y;
-	int	x;
-
-	y = -1;
-	while (map->map[++y])
-	{
-		x = -1;
-		while (map->map[y][++x])
-			if (map->map[y][x] == ' ')
-				map->map[y][x] = '1';
-	}
 }
 
 // static void	print_map(t_map *map)

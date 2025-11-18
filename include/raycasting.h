@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yosherau <yosherau@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:21:49 by yosherau          #+#    #+#             */
-/*   Updated: 2025/11/16 16:44:12 by yosherau         ###   ########.fr       */
+/*   Updated: 2025/11/18 10:25:06 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@
 # define MOVE_SPEED 0.03
 
 typedef struct s_game	t_game;
-
-// Why is this here?
-// typedef struct s_player	t_player;
-// typedef struct s_map	t_map;
 
 typedef struct s_ray
 {
