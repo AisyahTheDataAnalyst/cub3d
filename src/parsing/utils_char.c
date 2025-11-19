@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:43:03 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/15 11:12:39 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/19 09:26:35 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	only_chars_of_map_in_whole_line(char *line)
 
 bool	skip_whitespace(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 }
 
 int	char_repitition(char *str, char c)

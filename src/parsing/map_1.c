@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:31:56 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 14:23:43 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:39:57 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ bool	map_has_valid_chars_only(t_parse *parse)
 		free(line);
 		line = get_next_line(parse->map_fd);
 	}
-	if (line)
-		free(line);
+	line = get_next_line(-2);
+	free(line);
 	close(parse->map_fd);
 	return (true);
 }
@@ -99,13 +99,14 @@ void	save_map(t_parse *parse, t_map *map)
 static char	*substring_into_map(char *line, t_parse *parse)
 {
 	int		len;
+	char	*end;
 	char	*res;
 
-	if (ft_strchr(line, '\n'))
-		len = ft_strchr(line, '\n') - (line + parse->width_start);
-	else
-		len = ft_strchr(line, '\0') - (line + parse->width_start);
-	if (parse->map_width > (parse->width_start - len))
+	end = ft_strchr(line, '\n');
+	if (!end)
+		end = ft_strchr(line, '\0');
+	len = end - &line[parse->width_start];
+	if (parse->map_width > len)
 		res = ft_substr(line, parse->width_start, len);
 	else
 		res = ft_substr(line, parse->width_start, parse->map_width);

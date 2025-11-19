@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:11:15 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/11/16 14:24:09 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:54:08 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	parse_colour(char *str, t_parse *parse, t_map *map)
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
 		return (err_msg(parse, NOT_SPACE), false);
-	raw_colour = ft_strtrim(&str[i], " \t\n");
+	raw_colour = ft_strtrim(&str[i], " \t\n\r");
 	if (!filter_raw_colour(raw_colour, parse))
 		return (free(raw_colour), false);
 	parse->rgb = malloc(sizeof(int) * 3);
@@ -55,10 +55,11 @@ static bool	filter_raw_colour(char *raw_colour, t_parse *parse)
 	i = -1;
 	while (raw_colour[++i])
 	{
-		if ((i == 0 && ft_isdigit(raw_colour[i]))
+		if ((i == 0 && !ft_isdigit(raw_colour[i]) && raw_colour[i] != '+')
 			|| (i == (int)ft_strlen(raw_colour) - 1
-				&& ft_isdigit(raw_colour[i]))
-			|| ft_isdigit(raw_colour[i])
+				&& !ft_isdigit(raw_colour[i])))
+			return (err_msg(parse, INVALID_COLOUR), false);
+		else if (ft_isdigit(raw_colour[i])
 			|| skip_whitespace(raw_colour[i])
 			|| raw_colour[i] == ','
 			|| (raw_colour[i] == '+' && i == 0)

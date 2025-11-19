@@ -6,7 +6,7 @@
 /*   By: aimokhta <aimokhta@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 10:18:51 by aimokhta          #+#    #+#             */
-/*   Updated: 2025/10/16 13:10:00 by aimokhta         ###   ########.fr       */
+/*   Updated: 2025/11/19 09:28:15 by aimokhta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	parse_north_texture(char *str, t_parse *parse, t_map *map)
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
 		return (err_msg(parse, NOT_SPACE), false);
-	raw_texture = ft_strtrim(&str[i], " \t\n");
+	raw_texture = ft_strtrim(&str[i], " \t\n\r");
 	if (++parse->no_txt_count > 1)
 		return (free(raw_texture), err_msg(parse, INVALID_NO_COUNT),
 			false);
@@ -46,7 +46,7 @@ bool	parse_south_texture(char *str, t_parse *parse, t_map *map)
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
 		return (err_msg(parse, NOT_SPACE), false);
-	raw_texture = ft_strtrim(&str[i], " \t\n");
+	raw_texture = ft_strtrim(&str[i], " \t\n\r");
 	if (++parse->so_txt_count > 1)
 		return (free(raw_texture), err_msg(parse, INVALID_SO_COUNT),
 			false);
@@ -70,7 +70,7 @@ bool	parse_west_texture(char *str, t_parse *parse, t_map *map)
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
 		return (err_msg(parse, NOT_SPACE), false);
-	raw_texture = ft_strtrim(&str[i], " \t\n");
+	raw_texture = ft_strtrim(&str[i], " \t\n\r");
 	if (++parse->we_txt_count > 1)
 		return (free(raw_texture), err_msg(parse, INVALID_WE_COUNT),
 			false);
@@ -94,7 +94,7 @@ bool	parse_east_texture(char *str, t_parse *parse, t_map *map)
 		continue ;
 	if (skip_whitespace(str[i]) && !is_space(str[i]))
 		return (err_msg(parse, NOT_SPACE), false);
-	raw_texture = ft_strtrim(&str[i], " \t\n");
+	raw_texture = ft_strtrim(&str[i], " \t\n\r");
 	if (++parse->ea_txt_count > 1)
 		return (free(raw_texture), err_msg(parse, INVALID_EA_COUNT),
 			false);
